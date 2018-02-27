@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { NewEmployeePage } from '../new-employee/new-employee';
+import { EditEmployeePage } from '../edit-employee/edit-employee';
+
+import { EMPLOYEES } from '../../services/mocks/employees';
 
 @Component({
   selector: 'page-home',
@@ -12,7 +15,6 @@ export class HomePage {
   addEmployee = NewEmployeePage
 
   constructor(public navCtrl: NavController) {
-
   }
 
   ionViewWillEnter(){
@@ -20,8 +22,13 @@ export class HomePage {
   }
 
   loadEmployees(){
-    let employees = [{first_name: "Nombre1", last_name: "Apellido1",position: "developer"},{first_name: "Nombre2", last_name: "Apellido2", position: "developer"}]
+    let employees = EMPLOYEES
     this.employees = employees
+  }
+
+  editEmployee(employee_id){
+    console.log('hola')
+    this.navCtrl.push(EditEmployeePage,{employee_id: employee_id})
   }
 
 }

@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
+import { EMPLOYEES } from '../../services/mocks/employees';
+
 /**
  * Generated class for the EditEmployeePage page.
  *
@@ -15,18 +17,30 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class EditEmployeePage {
 
-  employee : any = {}
-
+  employee : any = {};
+  teams: any = [];
+  positions: any = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
-  ionViewDidLoad() {
-    this.loadEmployee(this.navParams.get('id'))
+
+  ionViewWillEnter() {
+    let employee_id = this.navParams.get('employee_id')
+    this.teams = [{id: 1, name: 'Frontend'},{id: 2, name: 'Mobile'}];
+    this.loadPositions();
+    this.loadEmployee(employee_id)
+
   }
 
-  loadEmployee(id){
-    
+  loadPositions(){
+    let positions = ["developer","project manager"];
+    this.positions = positions;
+  }
+
+  loadEmployee(employee_id){
+    this.employee = EMPLOYEES.find((el)=> el.id != employee_id)
+    // ADD SERVICE TO LOAD EMPLOYEE
   }
 
 }

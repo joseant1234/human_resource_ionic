@@ -1,11 +1,11 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="purple">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Employees</ion-title>
     <ion-buttons end>
-     <button ion-button icon-only [navPush]="addEmployee" color="purple">
+     <button ion-button icon-only [navPush]="addEmployee" >
        <ion-icon name="add"></ion-icon>
      </button>
    </ion-buttons>
@@ -25,10 +25,10 @@
     </ion-card-content>
     <ion-row>
       <ion-col text-right>
-        <button ion-button icon-only clear small color="purple">
+        <button ion-button icon-only clear small color="purple" >
           <ion-icon name="eye"></ion-icon>
         </button>
-        <button ion-button icon-only clear small color="purple">
+        <button ion-button icon-only clear small color="purple" (click)="editEmployee(employee.id)">
           <ion-icon name="brush"></ion-icon>
         </button>
       </ion-col>

@@ -6,13 +6,37 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>edit-employee</ion-title>
+  <ion-navbar color="purple">
+    <ion-title>{{employee.first_name}} {{employee.last_name}}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-
+  <ion-item>
+    <ion-label floating>First name</ion-label>
+    <ion-input [(ngModel)]="employee.first_name" type="text" placeholder="First name"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label floating>Last name</ion-label>
+    <ion-input [(ngModel)]="employee.last_name" type="text" placeholder="Last name"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Team</ion-label>
+    <ion-select [(ngModel)]="employee.team_id">
+      <ion-option value={{team.id}} *ngFor="let team of teams">{{team.name}}</ion-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label>Position</ion-label>
+    <ion-select [(ngModel)]="employee.position">
+      <ion-option value={{position}} *ngFor="let position of positions">{{position}}</ion-option>
+    </ion-select>
+  </ion-item>
+  <ion-row>
+    <ion-col text-right>
+      <button ion-button (tap)="save()" color="purple">Save</button>
+    </ion-col>
+  </ion-row>
 </ion-content>
