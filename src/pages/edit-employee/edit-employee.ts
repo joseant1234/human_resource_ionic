@@ -20,22 +20,25 @@ export class EditEmployeePage {
   employee : any = {};
   teams: any = [];
   positions: any = [];
+  tabs : string = "general"
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
-
   ionViewWillEnter() {
     let employee_id = this.navParams.get('employee_id')
-    this.teams = [{id: 1, name: 'Frontend'},{id: 2, name: 'Mobile'}];
+    this.loadTeams();
     this.loadPositions();
-    this.loadEmployee(employee_id)
-
+    this.loadEmployee(employee_id);
   }
 
   loadPositions(){
     let positions = ["developer","project manager"];
     this.positions = positions;
+  }
+
+  loadTeams(){
+    this.teams = [{id: 1, name: 'Frontend'},{id: 2, name: 'Mobile'}];
   }
 
   loadEmployee(employee_id){

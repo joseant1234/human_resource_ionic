@@ -10,33 +10,78 @@
     <ion-title>{{employee.first_name}} {{employee.last_name}}</ion-title>
   </ion-navbar>
 
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="tabs" color="purple">
+      <ion-segment-button value="general">
+        General
+      </ion-segment-button>
+      <ion-segment-button value="educations">
+        Education
+      </ion-segment-button>
+      <ion-segment-button value="projects">
+        Projects
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
 </ion-header>
 
 
 <ion-content padding>
-  <ion-item>
-    <ion-label floating>First name</ion-label>
-    <ion-input [(ngModel)]="employee.first_name" type="text" placeholder="First name"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label floating>Last name</ion-label>
-    <ion-input [(ngModel)]="employee.last_name" type="text" placeholder="Last name"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label>Team</ion-label>
-    <ion-select [(ngModel)]="employee.team_id">
-      <ion-option value={{team.id}} *ngFor="let team of teams">{{team.name}}</ion-option>
-    </ion-select>
-  </ion-item>
-  <ion-item>
-    <ion-label>Position</ion-label>
-    <ion-select [(ngModel)]="employee.position">
-      <ion-option value={{position}} *ngFor="let position of positions">{{position}}</ion-option>
-    </ion-select>
-  </ion-item>
-  <ion-row>
-    <ion-col text-right>
-      <button ion-button (tap)="save()" color="purple">Save</button>
-    </ion-col>
-  </ion-row>
+  <div [ngSwitch]="tabs">
+    <ion-list *ngSwitchCase="'general'">
+      <ion-item>
+        <ion-label floating>First name</ion-label>
+        <ion-input [(ngModel)]="employee.first_name" type="text" placeholder="First name"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Last name</ion-label>
+        <ion-input [(ngModel)]="employee.last_name" type="text" placeholder="Last name"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Team</ion-label>
+        <ion-select [(ngModel)]="employee.team_id">
+          <ion-option value={{team.id}} *ngFor="let team of teams">{{team.name}}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Position</ion-label>
+        <ion-select [(ngModel)]="employee.position">
+          <ion-option value={{position}} *ngFor="let position of positions">{{position}}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-row>
+        <ion-col text-right>
+          <button ion-button (tap)="save()" color="purple">Save</button>
+        </ion-col>
+      </ion-row>
+    </ion-list>
+    <ion-list *ngSwitchCase="'educations'">
+      <ion-list-header color="purple">Last degree</ion-list-header>
+      <ion-item>
+        <ion-label stack>Degree</ion-label>
+        <ion-input [(ngModel)]="employee.degree" type="text"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label stack>College</ion-label>
+        <ion-input [(ngModel)]="employee.college" type="text"></ion-input>
+      </ion-item>
+      <ion-list-header color="purple">Languages</ion-list-header>
+      <ion-item>
+        <ion-label stack>Language</ion-label>
+        <ion-input [(ngModel)]="employee.language" type="text"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label stack>Level</ion-label>
+        <ion-input [(ngModel)]="employee.level" type="text"></ion-input>
+      </ion-item>
+      <ion-row>
+        <ion-col text-right>
+          <button ion-button icon-only color="purple">
+            <ion-icon name="add"></ion-icon>
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-list>
+  </div>
 </ion-content>

@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { IonicStorageModule } from '@ionic/storage';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -11,6 +12,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { NewEmployeePage } from '../pages/new-employee/new-employee';
 import { EditEmployeePage } from '../pages/edit-employee/edit-employee';
+import { FilterComponent } from '../components/filter/filter';
 
 @NgModule({
   declarations: [
@@ -19,10 +21,12 @@ import { EditEmployeePage } from '../pages/edit-employee/edit-employee';
     ListPage,
     NewEmployeePage,
     EditEmployeePage,
+    FilterComponent,
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -31,6 +35,7 @@ import { EditEmployeePage } from '../pages/edit-employee/edit-employee';
     ListPage,
     NewEmployeePage,
     EditEmployeePage,
+    FilterComponent,
   ],
   providers: [
     StatusBar,

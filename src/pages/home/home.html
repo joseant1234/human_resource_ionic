@@ -5,6 +5,9 @@
     </button>
     <ion-title>Employees</ion-title>
     <ion-buttons end>
+      <button ion-button icon-only (click)="openFilterModal()" >
+        <ion-icon name="search"></ion-icon>
+      </button>
      <button ion-button icon-only [navPush]="addEmployee" >
        <ion-icon name="add"></ion-icon>
      </button>
