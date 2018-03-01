@@ -4,6 +4,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { IonicStorageModule } from '@ionic/storage';
 
 import { MyApp } from './app.component';
+import { LoginPage } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 
@@ -21,6 +22,7 @@ import { FilterComponent } from '../components/filter/filter';
     ListPage,
     NewEmployeePage,
     EditEmployeePage,
+    LoginPage,
     FilterComponent,
   ],
   imports: [
@@ -35,6 +37,7 @@ import { FilterComponent } from '../components/filter/filter';
     ListPage,
     NewEmployeePage,
     EditEmployeePage,
+    LoginPage,
     FilterComponent,
   ],
   providers: [

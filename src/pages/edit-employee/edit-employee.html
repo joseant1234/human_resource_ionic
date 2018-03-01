@@ -67,21 +67,104 @@
         <ion-input [(ngModel)]="employee.college" type="text"></ion-input>
       </ion-item>
       <ion-list-header color="purple">Languages</ion-list-header>
-      <ion-item>
-        <ion-label stack>Language</ion-label>
-        <ion-input [(ngModel)]="employee.language" type="text"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label stack>Level</ion-label>
-        <ion-input [(ngModel)]="employee.level" type="text"></ion-input>
-      </ion-item>
+
+      <div *ngFor="let language of employee.languages; let i = index">
+        <ion-row>
+          <ion-col col-10>
+            <ion-item>
+              <ion-label stack>Language</ion-label>
+              <ion-input [(ngModel)]="language.language" type="text"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col col-2 text-right>
+            <button ion-button icon-only clear color="danger" (tap)="deleteLanguage(i)">
+              <ion-icon name="trash"></ion-icon>
+            </button>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-10>
+            <ion-item>
+              <ion-label stack>Level</ion-label>
+              <ion-input [(ngModel)]="language.level" type="text"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </div>
+
       <ion-row>
         <ion-col text-right>
-          <button ion-button icon-only color="purple">
+          <button ion-button icon-only clear color="purple" (tap)="addLanguage()">
+            <ion-icon name="add"></ion-icon>
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-list>
+
+    <ion-list *ngSwitchCase="'projects'">
+      <ion-list-header color="purple">Projects</ion-list-header>
+      <div *ngFor="let project of employee.projects; let i = index">
+        <ion-row>
+          <ion-col col-10>
+            <ion-item>
+              <ion-label stack>Project name</ion-label>
+              <ion-input [(ngModel)]="project.title" type="text"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col col-2 text-right>
+            <button ion-button icon-only clear color="danger" (tap)="deleteProject(i)">
+              <ion-icon name="trash"></ion-icon>
+            </button>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-10>
+            <ion-item>
+              <ion-label stack>Role</ion-label>
+              <ion-input [(ngModel)]="project.role" type="text"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-10>
+            <ion-item>
+              <ion-label stack>Start date</ion-label>
+              <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="project.start_date"></ion-datetime>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-10>
+            <ion-item>
+              <ion-label stack>End date</ion-label>
+              <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="project.end_date"></ion-datetime>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-label>Responsabilities</ion-label>
+            <ion-icon name="add" (tap)="addResponsability(project)"></ion-icon>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-chip *ngFor="let responsability of project.responsabilities; let i = index" class="top-space">
+              <ion-label color="purple">{{responsability.responsability}}</ion-label>
+              <ion-icon name="close" (tap)="deleteResponsability(project,i)"></ion-icon>
+            </ion-chip>
+          </ion-col>
+        </ion-row>
+      </div>
+
+      <ion-row>
+        <ion-col text-right>
+          <button ion-button icon-only clear color="purple" (tap)="addProject(project)">
             <ion-icon name="add"></ion-icon>
           </button>
         </ion-col>
       </ion-row>
     </ion-list>
   </div>
+
 </ion-content>

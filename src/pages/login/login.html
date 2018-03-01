@@ -4,15 +4,40 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
 
-  <ion-navbar>
-    <ion-title>login</ion-title>
-  </ion-navbar>
+<ion-content padding style="background-color:  #7c00fa;">
 
-</ion-header>
+  <ion-row class="top-space">
+    <ion-col text-center>
+      <h1 class="white-text bold">CVcitos</h1>
+    </ion-col>
+  </ion-row>
 
+    <ion-card>
+      <ion-card-header>
+        <ion-row>
+          <ion-col text-center>
+              <ion-title>Account</ion-title>
+          </ion-col>
+        </ion-row>
+      </ion-card-header>
 
-<ion-content padding>
+      <ion-card-content>
+        <ion-row center responsive-md>
+          <ion-col width-50 offset-25>
+            <ion-item>
+              <ion-label stacked>Email</ion-label>
+              <ion-input [(ngModel)]="user.email" type="email" placeholder="correo@demo.com"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label stacked>Contraseña</ion-label>
+              <ion-input [(ngModel)]="user.password" type="password" placeholder="Mínimo 6 caracteres"></ion-input>
+            </ion-item>
+            <button ion-button full color="purple" (tap)="login()">Entrar</button>
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
 
 </ion-content>
