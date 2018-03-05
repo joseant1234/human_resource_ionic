@@ -7,7 +7,7 @@ import { NewEmployeePage } from '../new-employee/new-employee';
 import { EditEmployeePage } from '../edit-employee/edit-employee';
 import { FilterComponent } from '../../components/filter/filter';
 
-import { EMPLOYEES } from '../../services/mocks/employees';
+import { EmployeeProvider } from '../../providers/employee/employee';
 
 @Component({
   selector: 'page-home',
@@ -18,7 +18,8 @@ export class HomePage {
   employees : any = [];
   addEmployee = NewEmployeePage
 
-  constructor(public modalCtrl: ModalController,public navCtrl: NavController,public storage: Storage) {
+  constructor(public modalCtrl: ModalController,public navCtrl: NavController,public storage: Storage,
+              private employeeProvider: EmployeeProvider) {
   }
 
   ionViewWillEnter(){
@@ -26,9 +27,8 @@ export class HomePage {
     this.storage.set('filters',{})
   }
 
-  loadEmployees(){
-    let employees = EMPLOYEES
-    this.employees = employees
+  loadEmployees() : void{
+    this.employeeProvider.getEmployees().subscribe(employees => this.employees = employees);
   }
 
   editEmployee(employee_id){

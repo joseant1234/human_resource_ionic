@@ -1,4 +1,4 @@
-<ion-header [color]="p">
+<ion-header>
     <ion-toolbar>
         <ion-title>
             Filtros
@@ -16,21 +16,21 @@
     <ion-list>
       <ion-item>
         <ion-label>Por posición</ion-label>
-        <ion-select [(ngModel)]="position_name">
+        <ion-select [(ngModel)]="position_filter">
           <ion-option value="" >Selecciona una posición</ion-option>
           <ion-option value={{position}} *ngFor="let position of positions">{{position}}</ion-option>
         </ion-select>
       </ion-item>
       <ion-item>
         <ion-label>Por equipo</ion-label>
-        <ion-select [(ngModel)]="team_id">
+        <ion-select [(ngModel)]="team_filter">
           <ion-option value="" >Selecciona un equipo</ion-option>
           <ion-option value={{team.id}} *ngFor="let team of teams">{{team.name}}</ion-option>
         </ion-select>
       </ion-item>
       <ion-item>
         <ion-label>Por skills</ion-label>
-        <ion-select [(ngModel)]="skills_names" multiple="true" cancelText="Nah" okText="Okay!">
+        <ion-select [(ngModel)]="skills_filter" multiple="true" cancelText="Nah" okText="Okay!">
           <ion-option value={{skill.name}} *ngFor="let skill of skills">{{skill.name}}</ion-option>
         </ion-select>
       </ion-item>

@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import { ViewController,NavController, NavParams  } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
+
+import { PositionsProvider} from '../../providers/positions/positions';
+import { TeamsProvider } from '../../providers/teams/teams';
+import { SkillsProvider } from '../../providers/skills/skills';
 /**
  * Generated class for the FilterComponent component.
  *
@@ -13,26 +17,27 @@ import { Storage } from '@ionic/storage';
 })
 export class FilterComponent {
 
-  position_name : string;
-  team_id : number;
-  skills_names: string;
+  position_filter : string;
+  skills_filter: string;
+  team_filter : number;
+
   positions : any = [];
   teams : any = [];
   skills : any = [];
 
-  constructor(public viewCtrl: ViewController,public navCtrl: NavController, public navParams: NavParams,public storage: Storage) {
+  constructor(public viewCtrl: ViewController,public navCtrl: NavController, public navParams: NavParams,
+              public storage: Storage, private positionsProvider: PositionsProvider,
+              private teamsProvider: TeamsProvider, private skillsProvider: SkillsProvider) {
     this.loadPositions();
     this.loadTeams()
     this.loadSkills()
     let filters = this.navParams.get('filters')
     if(filters){
-      this.position_name = filters.position_name
-      this.team_id = filters.team_id
-      this.skills_names = filters.skills_names
+      this.position_filter = filters.position_name
+      this.team_filter = filters.team_id
+      this.skills_filter = filters.skills_names
     }
 
-    // this.team_id = filters.team_id
-    // this.skills_names = filters.skills_names
   }
 
   dismiss(){
@@ -40,20 +45,19 @@ export class FilterComponent {
   }
 
   loadPositions(){
-    let positions = ["developer","project manager"];
-    this.positions = positions;
+    this.positionsProvider.getPositions().subscribe(positions => this.positions = positions);
   }
 
   loadTeams(){
-    this.teams = [{id: 1, name: 'Frontend'},{id: 2, name: 'Mobile'}];
+    this.teamsProvider.getTeams().subscribe(teams => this.teams = teams);
   }
 
   loadSkills(){
-    this.skills = [{id: 1, name: 'React'},{id: 2, name: 'Angular'},{id: 3, name: 'Python'}]
+    this.skillsProvider.getSkills().subscribe(skills => this.skills = skills);
   }
 
   search(){
-    this.storage.set('filters',{position_name: this.position_name,team_id: this.team_id, skills_names: this.skills_names});
+    this.storage.set('filters',{position_name: this.position_filter,team_id: this.team_filter, skills_names: this.skills_filter});
     this.dismiss()
   }
 

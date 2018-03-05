@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
+import { PositionsProvider} from '../../providers/positions/positions';
+import { TeamsProvider } from '../../providers/teams/teams';
+
 /**
  * Generated class for the NewEmployeePage page.
  *
@@ -19,22 +22,22 @@ export class NewEmployeePage {
   teams: any = [];
   positions: any = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private positionsProvider: PositionsProvider,
+              private teamsProvider: TeamsProvider) {
 
   }
 
   ionViewWillEnter(){
-    this.teams = [{id: 1, name: 'Frontend'},{id: 2, name: 'Mobile'}];
     this.loadPositions();
+    this.loadTeams();
   }
 
-  loadPositions(){
-    let positions = ["developer","project manager"];
-    this.positions = positions;
+  loadPositions() : void{
+    this.positionsProvider.getPositions().subscribe(positions => this.positions = positions);
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad NewEmployeePage');
+  loadTeams() : void{
+    this.teamsProvider.getTeams().subscribe(teams => this.teams = teams);
   }
 
   save(){

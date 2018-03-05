@@ -1,0 +1,6 @@
+<ion-item>
+  <ion-label stacked>Skills</ion-label>
+  <ion-select [(ngModel)]="skills_selected" multiple="true" cancelText="Nah" okText="Okay!">
+    <ion-option value={{skill.name}} *ngFor="let skill of skills">{{skill.name}}</ion-option>
+  </ion-select>
+</ion-item>

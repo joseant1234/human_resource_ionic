@@ -1,7 +1,11 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams,AlertController } from 'ionic-angular';
 
-import { EMPLOYEES } from '../../services/mocks/employees';
+import { EmployeeProvider } from '../../providers/employee/employee';
+import { PositionsProvider} from '../../providers/positions/positions';
+import { TeamsProvider } from '../../providers/teams/teams';
+import { SkillsProvider} from '../../providers/skills/skills';
+import { SkillSelectComponent } from '../../components/skill-select/skill-select';
 
 /**
  * Generated class for the EditEmployeePage page.
@@ -20,9 +24,15 @@ export class EditEmployeePage {
   employee : any = {};
   teams: any = [];
   positions: any = [];
+  skills : any = [];
+
+  skills_filters : string;
+
   tabs : string = "general"
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,private alertCtrl: AlertController,) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,private alertCtrl: AlertController,
+              private employeeProvider: EmployeeProvider,private positionsProvider: PositionsProvider,
+              private teamsProvider: TeamsProvider, private skillsProvider: SkillsProvider) {
   }
 
   ionViewWillEnter() {
@@ -30,20 +40,28 @@ export class EditEmployeePage {
     this.loadTeams();
     this.loadPositions();
     this.loadEmployee(employee_id);
+    this.loadSkills();
     // console.log(JSON.stringify(this.employee))
   }
 
   loadPositions(){
-    let positions = ["developer","project manager"];
-    this.positions = positions;
+    this.positionsProvider.getPositions().subscribe(positions => this.positions = positions)
   }
 
   loadTeams(){
-    this.teams = [{id: 1, name: 'Frontend'},{id: 2, name: 'Mobile'}];
+    this.teamsProvider.getTeams().subscribe(teams => this.teams = teams)
+  }
+
+  loadSkills(){
+    // this.skills = [{id: 1, name: 'React'},{id: 2, name: 'Angular'},{id: 3, name: 'Python'}]
+    this.skillsProvider.getSkills().subscribe(skills => this.skills = skills);
   }
 
   loadEmployee(employee_id){
-    this.employee = EMPLOYEES.find((el)=> el.id != employee_id)
+    this.employeeProvider.getEmployees()
+      .subscribe((employees) =>{
+        this.employee = employees.find((el)=> el.id != employee_id)
+      });
     // ADD SERVICE TO LOAD EMPLOYEE
   }
 
@@ -52,8 +70,7 @@ export class EditEmployeePage {
   }
 
   deleteLanguage(index){
-    this.employee.languages.splice(index,1)
-    console.log(this.employee.languages)
+    this.employee.languages.splice(index,1);
   }
 
   addProject(){
@@ -86,5 +103,17 @@ export class EditEmployeePage {
   deleteResponsability(project,index){
     project.responsabilities.splice(index,1);
   }
+
+    // return employee_skills.map((el)=>{
+    //   el.skill.name
+    // })
+
+
+
+
+
+
+
+
 
 }
