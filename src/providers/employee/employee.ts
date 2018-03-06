@@ -1,10 +1,11 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 
 import { EMPLOYEES } from '../../services/mocks/employees';
-
+import { URL } from '../../services/config';
+import { buildParams } from '../../commons/helpers/buildParams'
 /*
   Generated class for the EmployeeProvider provider.
 
@@ -19,6 +20,16 @@ export class EmployeeProvider {
 
   getEmployees() : Observable<any>{
     return of(EMPLOYEES);
+  }
+
+  updateEmployee(employee,jwt) : Observable<any>{
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': 'Bearer ' + jwt
+      })
+    };
+    return this.http.put(URL + "employees/"+ employee.id,buildParams([{attr: 'languages', prefix: 'employees', suffix: '_attributes'}],employee),httpOptions)
   }
 
 }

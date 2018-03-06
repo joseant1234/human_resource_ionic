@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams,AlertController } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
 
 import { EmployeeProvider } from '../../providers/employee/employee';
 import { PositionsProvider} from '../../providers/positions/positions';
 import { TeamsProvider } from '../../providers/teams/teams';
 import { SkillsProvider} from '../../providers/skills/skills';
-import { SkillSelectComponent } from '../../components/skill-select/skill-select';
 
 /**
  * Generated class for the EditEmployeePage page.
@@ -25,14 +25,18 @@ export class EditEmployeePage {
   teams: any = [];
   positions: any = [];
   skills : any = [];
+  employee_form: any = {};
 
   skills_filters : string;
 
   tabs : string = "general"
 
+  jwt : string
+
   constructor(public navCtrl: NavController, public navParams: NavParams,private alertCtrl: AlertController,
               private employeeProvider: EmployeeProvider,private positionsProvider: PositionsProvider,
-              private teamsProvider: TeamsProvider, private skillsProvider: SkillsProvider) {
+              private teamsProvider: TeamsProvider, private skillsProvider: SkillsProvider,
+              public storage: Storage) {
   }
 
   ionViewWillEnter() {
@@ -41,6 +45,9 @@ export class EditEmployeePage {
     this.loadPositions();
     this.loadEmployee(employee_id);
     this.loadSkills();
+    this.storage.get('jwt').then((data)=>{
+      this.jwt = data
+    })
     // console.log(JSON.stringify(this.employee))
   }
 
@@ -61,6 +68,8 @@ export class EditEmployeePage {
     this.employeeProvider.getEmployees()
       .subscribe((employees) =>{
         this.employee = employees.find((el)=> el.id != employee_id)
+        Object.assign(this.employee_form,this.employee);
+        console.log(this.employee_form)
       });
     // ADD SERVICE TO LOAD EMPLOYEE
   }
@@ -75,6 +84,7 @@ export class EditEmployeePage {
 
   addProject(){
     this.employee.projects.push({responsabilities: []})
+    console.log(this.employee)
   }
 
   deleteProject(index){
@@ -104,8 +114,22 @@ export class EditEmployeePage {
     project.responsabilities.splice(index,1);
   }
 
-  setSkills(skills){
+  selectSkills(skills){
+    // this.employee_form.project
+  }
 
+
+  save(){
+  
+    this.employeeProvider.updateEmployee(this.employee,this.jwt)
+    .subscribe(
+      response => {
+
+      },
+      error => {
+
+      }
+    );
   }
 
     // return employee_skills.map((el)=>{

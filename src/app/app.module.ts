@@ -20,6 +20,7 @@ import { EmployeeProvider } from '../providers/employee/employee';
 import { PositionsProvider } from '../providers/positions/positions';
 import { TeamsProvider } from '../providers/teams/teams';
 import { SkillsProvider } from '../providers/skills/skills';
+import { AuthProvider } from '../providers/auth/auth';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,11 @@ import { SkillsProvider } from '../providers/skills/skills';
     EmployeeProvider,
     PositionsProvider,
     TeamsProvider,
-    SkillsProvider
+    SkillsProvider,
+    AuthProvider,
+    AuthProvider,
+    AuthProvider,
+    AuthProvider
   ]
 })
 export class AppModule {}

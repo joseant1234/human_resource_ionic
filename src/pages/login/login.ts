@@ -4,6 +4,8 @@ import { Storage } from '@ionic/storage';
 
 import { HomePage } from '../home/home';
 
+import { AuthProvider } from '../../providers/auth/auth';
+
 import { USERS } from '../../services/mocks/users';
 
 /**
@@ -22,7 +24,8 @@ export class LoginPage {
 
   user : any = {}
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,private alertCtrl: AlertController, public loadingCtrl: LoadingController, public storage: Storage) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,private alertCtrl: AlertController,
+              public loadingCtrl: LoadingController, public storage: Storage, private authProvider: AuthProvider) {
   }
 
   ionViewDidLoad() {
@@ -36,23 +39,27 @@ export class LoginPage {
       });
 
       loading.present().then(()=>{
-        // SERVICE TO LOGIN
-        let user = USERS.find((el)=> el.email == this.user.email);
-        if(user){
-          this.navCtrl.setRoot(HomePage);
-          loading.dismiss();
-          this.storage.set('user_id',user.id)
-        }else{
-          let alert = this.alertCtrl.create({
-            title: "Sign in",
-            subTitle: "Email o contraseña incorrecta",
-            buttons: ['Aceptar']
-          });
-          alert.present();
-          loading.dismiss();
-        }
+        // let user = USERS.find((el)=> el.email == this.user.email);
+        let credentials = {email: this.user.email,password: this.user.password};
+        this.authProvider.login(credentials)
+        .subscribe(
+          result => {
+            this.navCtrl.setRoot(HomePage);
+            loading.dismiss();
+            this.storage.set("jwt",result.data.attributes.jwt)
+          },
+          error => {
+            let alert = this.alertCtrl.create({
+              title: "Sign in",
+              subTitle: "Email o contraseña incorrecta",
+              buttons: ['Aceptar']
+            });
+            alert.present();
+            loading.dismiss();
+          }
+        );
       });
-      
+
     }else{
       let alert = this.alertCtrl.create({
         title: "Sign in",

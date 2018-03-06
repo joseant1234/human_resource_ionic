@@ -28,7 +28,7 @@ export class MyApp {
       { title: 'Salir', component: LoginPage }
     ];
 
-    storage.get('user_id').then((val)=>{
+    storage.get('jwt').then((val)=>{
       if(val){
         this.rootPage = HomePage;
       }
@@ -58,7 +58,7 @@ export class MyApp {
   }
 
   logout(){
-    this.storage.remove('user_id');
+    this.storage.remove('jwt');
     this.nav.setRoot(LoginPage);
   }
 }
