@@ -104,6 +104,10 @@ export class EditEmployeePage {
     project.responsabilities.splice(index,1);
   }
 
+  setSkills(skills){
+
+  }
+
     // return employee_skills.map((el)=>{
     //   el.skill.name
     // })

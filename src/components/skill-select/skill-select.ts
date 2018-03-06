@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 /**
  * Generated class for the SkillSelectComponent component.
  *
@@ -13,6 +13,8 @@ export class SkillSelectComponent {
 
   @Input() skills :any = [];
   @Input() skills_selected : any = [];
+  // @Input() project_id: number;
+  @Output() onSelectSkill = new EventEmitter();
 
   constructor() {
   }
@@ -22,6 +24,11 @@ export class SkillSelectComponent {
       this.skills_selected = this.skills_selected.map(el => el.skill.name)
     }
   }
+
+  selectSkills(){
+    this.onSelectSkill.emit(this.skills_selected)
+  }
+
 
 
 }

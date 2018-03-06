@@ -157,7 +157,7 @@
           </ion-col>
         </ion-row>
 
-        <skill-select [skills]="skills" [skills_selected]="project.employee_skills"></skill-select>
+        <skill-select [skills]="skills" [skills_selected]="project.employee_skills" (onSelectSkill)="setSkills($event)"></skill-select>
 
       </div>
 
