@@ -14,13 +14,19 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { NewEmployeePage } from '../pages/new-employee/new-employee';
 import { EditEmployeePage } from '../pages/edit-employee/edit-employee';
+
 import { FilterComponent } from '../components/filter/filter';
 import { SkillSelectComponent } from '../components/skill-select/skill-select';
+import { TabGeneralComponent } from '../components/tab-general/tab-general';
+import { TabEducationsComponent } from '../components/tab-educations/tab-educations';
+import { TabProjectsComponent } from '../components/tab-projects/tab-projects';
+
 import { EmployeeProvider } from '../providers/employee/employee';
 import { PositionsProvider } from '../providers/positions/positions';
 import { TeamsProvider } from '../providers/teams/teams';
 import { SkillsProvider } from '../providers/skills/skills';
 import { AuthProvider } from '../providers/auth/auth';
+import { JwtProvider } from '../providers/auth/jwt';
 
 @NgModule({
   declarations: [
@@ -32,6 +38,9 @@ import { AuthProvider } from '../providers/auth/auth';
     LoginPage,
     FilterComponent,
     SkillSelectComponent,
+    TabGeneralComponent,
+    TabEducationsComponent,
+    TabProjectsComponent,
   ],
   imports: [
     BrowserModule,
@@ -61,7 +70,8 @@ import { AuthProvider } from '../providers/auth/auth';
     AuthProvider,
     AuthProvider,
     AuthProvider,
-    AuthProvider
+    AuthProvider,
+    JwtProvider
   ]
 })
 export class AppModule {}

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { ViewController,NavController, NavParams  } from 'ionic-angular';
-import { Storage } from '@ionic/storage';
 
 import { PositionsProvider} from '../../providers/positions/positions';
 import { TeamsProvider } from '../../providers/teams/teams';
@@ -26,22 +25,25 @@ export class FilterComponent {
   skills : any = [];
 
   constructor(public viewCtrl: ViewController,public navCtrl: NavController, public navParams: NavParams,
-              public storage: Storage, private positionsProvider: PositionsProvider,
-              private teamsProvider: TeamsProvider, private skillsProvider: SkillsProvider) {
-    this.loadPositions();
-    this.loadTeams()
-    this.loadSkills()
-    let filters = this.navParams.get('filters')
-    if(filters){
-      this.position_filter = filters.position_name
-      this.team_filter = filters.team_id
-      this.skills_filter = filters.skills_names
-    }
+              private positionsProvider: PositionsProvider,
+              private teamsProvider: TeamsProvider,
+              private skillsProvider: SkillsProvider) {
 
+    this.loadPositions();
+    this.loadTeams();
+    this.loadSkills();
+    let filters = this.navParams.get('filters');
+    if(filters){
+      this.position_filter = filters.position_name;
+      this.team_filter = filters.team_id;
+      this.skills_filter = filters.skills_names;
+    }
   }
 
   dismiss(){
-    this.viewCtrl.dismiss()
+    let filters = {};
+    filters = {position_name: this.position_filter,team_id: this.team_filter, skills_names: this.skills_filter};
+    this.viewCtrl.dismiss(filters);
   }
 
   loadPositions(){
@@ -57,8 +59,8 @@ export class FilterComponent {
   }
 
   search(){
-    this.storage.set('filters',{position_name: this.position_filter,team_id: this.team_filter, skills_names: this.skills_filter});
-    this.dismiss()
+    // this.storage.set('filters',{position_name: this.position_filter,team_id: this.team_filter, skills_names: this.skills_filter});
+    this.dismiss();
   }
 
 }

@@ -1,0 +1,79 @@
+<ion-card>
+  <ion-list-header color="purple">
+    Projects
+    <button ion-button icon-only clear color="light" (tap)="addProject()" item-end>
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-list-header>
+</ion-card>
+<div *ngFor="let project of employee.employee_projects; let i = index">
+  <ion-card>
+    <div [hidden]="project.attributes._destroy && project.attributes._destroy == 1">
+      <ion-list-header color="dark">{{project.attributes.title}}</ion-list-header>
+      <ion-row>
+        <ion-col col-10>
+          <ion-item>
+            <ion-label stack>Project name</ion-label>
+            <ion-input [(ngModel)]="project.attributes.title" type="text"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col col-2 text-right>
+          <button ion-button icon-only clear color="danger" (tap)="deleteProject(project)">
+            <ion-icon name="trash"></ion-icon>
+          </button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-10>
+          <ion-item>
+            <ion-label stack>Role</ion-label>
+            <ion-input [(ngModel)]="project.attributes.role" type="text"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-10>
+          <ion-item>
+            <ion-label stack>Start date</ion-label>
+            <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="project.attributes.start_date"></ion-datetime>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-10>
+          <ion-item>
+            <ion-label stack>End date</ion-label>
+            <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="project.attributes.end_date"></ion-datetime>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-list-header color="primary">
+        Responsabilities
+        <button ion-button icon-only clear color="light" (tap)="addResponsability(project)" item-end>
+          <ion-icon name="add"></ion-icon>
+        </button>
+      </ion-list-header>
+      <ion-row>
+        <ion-col col-12>
+          <div *ngFor="let responsability of project.employee_project_responsabilities; let i = index" class="top-space">
+            <ion-chip [hidden]="responsability.attributes._destroy && responsability.attributes._destroy == 1">
+              <ion-label color="purple">{{responsability.attributes.responsability}}</ion-label>
+              <ion-icon name="close" (tap)="deleteResponsability(responsability)"></ion-icon>
+            </ion-chip>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-list-header color="secondary">
+        Skills
+      </ion-list-header>
+      <skill-select
+          [skills]="skills"
+          [skills_selected]="project.employee_project_skills"
+          [employee_project_index]="i"
+          (onSelectSkill)="selectSkills($event)">
+      </skill-select>
+    </div>
+  </ion-card>
+</div>

@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams,AlertController } from 'ionic-angular';
-import { Storage } from '@ionic/storage';
+import { Employees } from '../../commons/employees';
 
 import { EmployeeProvider } from '../../providers/employee/employee';
 import { PositionsProvider} from '../../providers/positions/positions';
 import { TeamsProvider } from '../../providers/teams/teams';
 import { SkillsProvider} from '../../providers/skills/skills';
+import { JwtProvider } from '../../providers/auth/jwt';
 
 /**
  * Generated class for the EditEmployeePage page.
@@ -22,8 +23,7 @@ import { SkillsProvider} from '../../providers/skills/skills';
 export class EditEmployeePage {
 
   employee : any = {};
-  teams: any = [];
-  positions: any = [];
+
   skills : any = [];
   employee_form: any = {};
 
@@ -31,64 +31,49 @@ export class EditEmployeePage {
 
   tabs : string = "general"
 
-  jwt : string
-
   constructor(public navCtrl: NavController, public navParams: NavParams,private alertCtrl: AlertController,
               private employeeProvider: EmployeeProvider,private positionsProvider: PositionsProvider,
               private teamsProvider: TeamsProvider, private skillsProvider: SkillsProvider,
-              public storage: Storage) {
+              private jwtProvider: JwtProvider) {
   }
 
   ionViewWillEnter() {
     let employee_id = this.navParams.get('employee_id')
-    this.loadTeams();
-    this.loadPositions();
     this.loadEmployee(employee_id);
     this.loadSkills();
-    this.storage.get('jwt').then((data)=>{
-      this.jwt = data
-    })
-    // console.log(JSON.stringify(this.employee))
   }
 
-  loadPositions(){
-    this.positionsProvider.getPositions().subscribe(positions => this.positions = positions)
-  }
-
-  loadTeams(){
-    this.teamsProvider.getTeams().subscribe(teams => this.teams = teams)
-  }
 
   loadSkills(){
-    // this.skills = [{id: 1, name: 'React'},{id: 2, name: 'Angular'},{id: 3, name: 'Python'}]
     this.skillsProvider.getSkills().subscribe(skills => this.skills = skills);
   }
 
   loadEmployee(employee_id){
-    this.employeeProvider.getEmployees()
-      .subscribe((employees) =>{
-        this.employee = employees.find((el)=> el.id != employee_id)
-        Object.assign(this.employee_form,this.employee);
-        console.log(this.employee_form)
-      });
-    // ADD SERVICE TO LOAD EMPLOYEE
+    // this.employeeProvider.getEmployees()
+    // .subscribe((employees) =>{
+    //   // this.employee = employees.data.find((el)=> el.attributes.id != employee_id)
+    //   console.log(employees)
+    //   this.employee = employees.data[0]
+    //
+    //
+    //   Object.assign(this.employee_form,this.employee);
+    // });
+    this.employeeProvider.getEmployee(employee_id,this.jwtProvider.jwt)
+    .subscribe((employee)=>{
+      this.employee = employee.data.attributes
+      // map data => relationship = [{},{},{},{}.....]
+      let relationships = Object.keys(employee.data.relationships)
+      relationships.map((relationship)=> this.employee[relationship] = employee.data.relationships[relationship])
+    })
   }
 
-  addLanguage(){
-    this.employee.languages.push({})
-  }
-
-  deleteLanguage(index){
-    this.employee.languages.splice(index,1);
-  }
 
   addProject(){
-    this.employee.projects.push({responsabilities: []})
-    console.log(this.employee)
+    this.employee.employee_projects.push({attributes:{},employee_responsabilities: []})
   }
 
   deleteProject(index){
-    this.employee.projects.splice(index,1)
+    this.employee.employee_projects.splice(index,1)
   }
 
   addResponsability(project){
@@ -104,14 +89,14 @@ export class EditEmployeePage {
         text: 'Agregar',
         handler: data => {
           if(!data.responsability) return false;
-          project.responsabilities.push({responsability: data.responsability})
+          project.employee_project_responsabilities.push({attributes:{responsability: data.responsability}})
         }
       }]
     });
     alert.present();
   }
   deleteResponsability(project,index){
-    project.responsabilities.splice(index,1);
+    project.employee_project_responsabilities.splice(index,1);
   }
 
   selectSkills(skills){
@@ -120,8 +105,8 @@ export class EditEmployeePage {
 
 
   save(){
-  
-    this.employeeProvider.updateEmployee(this.employee,this.jwt)
+
+    this.employeeProvider.updateEmployee(this.employee,this.jwtProvider.jwt)
     .subscribe(
       response => {
 
@@ -135,13 +120,4 @@ export class EditEmployeePage {
     // return employee_skills.map((el)=>{
     //   el.skill.name
     // })
-
-
-
-
-
-
-
-
-
 }

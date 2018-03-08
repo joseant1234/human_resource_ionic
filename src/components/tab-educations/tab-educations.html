@@ -1,0 +1,41 @@
+<ion-list-header color="purple">Last degree</ion-list-header>
+<ion-item>
+  <ion-label stack>Degree</ion-label>
+  <ion-input [(ngModel)]="employee.degree" type="text"></ion-input>
+</ion-item>
+<ion-item>
+  <ion-label stack>College</ion-label>
+  <ion-input [(ngModel)]="employee.college" type="text"></ion-input>
+</ion-item>
+
+<ion-list-header color="purple">
+  Languages
+  <button ion-button icon-only clear color="light" (tap)="addLanguage()" item-end>
+    <ion-icon name="add"></ion-icon>
+  </button>
+</ion-list-header>
+<div *ngFor="let language of employee.employee_languages; let i = index">
+  <div [hidden]="language.attributes._destroy && language.attributes._destroy == 1">
+    <ion-row>
+      <ion-col col-10>
+        <ion-item>
+          <ion-label stack>Language</ion-label>
+          <ion-input [(ngModel)]="language.attributes.language" type="text"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col col-2 text-right>
+        <button ion-button icon-only clear color="danger" (tap)="deleteLanguage(language)">
+          <ion-icon name="trash"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-10>
+        <ion-item>
+          <ion-label stack>Level</ion-label>
+          <ion-input [(ngModel)]="language.attributes.level" type="text"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </div>
+</div>

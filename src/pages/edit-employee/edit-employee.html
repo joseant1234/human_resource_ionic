@@ -6,7 +6,7 @@
 -->
 <ion-header>
 
-  <ion-navbar color="purple">
+  <ion-navbar color="purple" >
     <ion-title>{{employee.first_name}} {{employee.last_name}}</ion-title>
   </ion-navbar>
 
@@ -30,143 +30,15 @@
 <ion-content padding>
   <div [ngSwitch]="tabs">
     <ion-list *ngSwitchCase="'general'">
-      <ion-item>
-        <ion-label floating>First name</ion-label>
-        <ion-input [(ngModel)]="employee.first_name" type="text" placeholder="First name"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label floating>Last name</ion-label>
-        <ion-input [(ngModel)]="employee.last_name" type="text" placeholder="Last name"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label>Team</ion-label>
-        <ion-select [(ngModel)]="employee.team_id">
-          <ion-option value={{team.id}} *ngFor="let team of teams">{{team.name}}</ion-option>
-        </ion-select>
-      </ion-item>
-      <ion-item>
-        <ion-label>Position</ion-label>
-        <ion-select [(ngModel)]="employee.position">
-          <ion-option value={{position}} *ngFor="let position of positions">{{position}}</ion-option>
-        </ion-select>
-      </ion-item>
-      <ion-row>
-        <ion-col text-right>
-          <button ion-button (tap)="save()" color="purple">Save</button>
-        </ion-col>
-      </ion-row>
+      <tab-general [employee]="employee" (onSave)="save($event)"></tab-general>
     </ion-list>
+
     <ion-list *ngSwitchCase="'educations'">
-      <ion-list-header color="purple">Last degree</ion-list-header>
-      <ion-item>
-        <ion-label stack>Degree</ion-label>
-        <ion-input [(ngModel)]="employee.degree" type="text"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label stack>College</ion-label>
-        <ion-input [(ngModel)]="employee.college" type="text"></ion-input>
-      </ion-item>
-      <ion-list-header color="purple">Languages</ion-list-header>
-
-      <div *ngFor="let language of employee.languages; let i = index">
-        <ion-row>
-          <ion-col col-10>
-            <ion-item>
-              <ion-label stack>Language</ion-label>
-              <ion-input [(ngModel)]="language.language" type="text"></ion-input>
-            </ion-item>
-          </ion-col>
-          <ion-col col-2 text-right>
-            <button ion-button icon-only clear color="danger" (tap)="deleteLanguage(i)">
-              <ion-icon name="trash"></ion-icon>
-            </button>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col col-10>
-            <ion-item>
-              <ion-label stack>Level</ion-label>
-              <ion-input [(ngModel)]="language.level" type="text"></ion-input>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-      </div>
-
-      <ion-row>
-        <ion-col text-right>
-          <button ion-button icon-only clear color="purple" (tap)="addLanguage()">
-            <ion-icon name="add"></ion-icon>
-          </button>
-        </ion-col>
-      </ion-row>
+      <tab-educations [employee]="employee"></tab-educations>
     </ion-list>
 
     <ion-list *ngSwitchCase="'projects'">
-      <ion-list-header color="purple">Projects</ion-list-header>
-      <div *ngFor="let project of employee.projects; let i = index">
-        <ion-row>
-          <ion-col col-10>
-            <ion-item>
-              <ion-label stack>Project name</ion-label>
-              <ion-input [(ngModel)]="project.title" type="text"></ion-input>
-            </ion-item>
-          </ion-col>
-          <ion-col col-2 text-right>
-            <button ion-button icon-only clear color="danger" (tap)="deleteProject(i)">
-              <ion-icon name="trash"></ion-icon>
-            </button>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col col-10>
-            <ion-item>
-              <ion-label stack>Role</ion-label>
-              <ion-input [(ngModel)]="project.role" type="text"></ion-input>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col col-10>
-            <ion-item>
-              <ion-label stack>Start date</ion-label>
-              <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="project.start_date"></ion-datetime>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col col-10>
-            <ion-item>
-              <ion-label stack>End date</ion-label>
-              <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="project.end_date"></ion-datetime>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-
-        <ion-row>
-          <ion-col>
-            <ion-label>Responsabilities</ion-label>
-            <ion-icon name="add" (tap)="addResponsability(project)"></ion-icon>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <ion-chip *ngFor="let responsability of project.responsabilities; let i = index" class="top-space">
-              <ion-label color="purple">{{responsability.responsability}}</ion-label>
-              <ion-icon name="close" (tap)="deleteResponsability(project,i)"></ion-icon>
-            </ion-chip>
-          </ion-col>
-        </ion-row>
-
-        <skill-select [skills]="skills" [skills_selected]="project.employee_skills" (onSelectSkill)="selectSkills($event)"></skill-select>
-      </div>
-
-      <ion-row>
-        <ion-col text-right>
-          <button ion-button icon-only clear color="purple" (tap)="addProject(project)">
-            <ion-icon name="add"></ion-icon>
-          </button>
-        </ion-col>
-      </ion-row>
+      <tab-projects [employee]="employee"></tab-projects>
     </ion-list>
   </div>
 

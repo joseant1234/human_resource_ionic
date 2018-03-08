@@ -6,5 +6,5 @@ export interface Employees{
 	last_name: string;
 	position: string;
 	team_id: number;
-	languages: Languages[];
+	// languages_attributes: Languages[];
 }

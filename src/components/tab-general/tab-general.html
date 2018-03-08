@@ -1,0 +1,106 @@
+<ion-item>
+  <ion-label floating>First name</ion-label>
+  <ion-input [(ngModel)]="employee.first_name" type="text" placeholder="First name"></ion-input>
+</ion-item>
+<ion-item>
+  <ion-label floating>Last name</ion-label>
+  <ion-input [(ngModel)]="employee.last_name" type="text" placeholder="Last name"></ion-input>
+</ion-item>
+<ion-item>
+  <ion-label>Team</ion-label>
+  <ion-select [(ngModel)]="employee.team_id">
+    <ion-option value={{team.id}} *ngFor="let team of teams">{{team.name}}</ion-option>
+  </ion-select>
+</ion-item>
+<ion-item>
+  <ion-label>Position</ion-label>
+  <ion-select [(ngModel)]="employee.position">
+    <ion-option value={{position}} *ngFor="let position of positions">{{position}}</ion-option>
+  </ion-select>
+</ion-item>
+
+<ion-list-header color="purple">
+  Certifications
+  <button ion-button icon-only clear color="light" (tap)="addCertification()" item-end>
+    <ion-icon name="add"></ion-icon>
+  </button>
+</ion-list-header>
+<div *ngFor="let certification of employee.employee_certifications; let i = index">
+  <div [hidden]="certification.attributes._destroy && certification.attributes._destroy == 1">
+    <ion-row>
+      <ion-col col-10>
+        <ion-item>
+          <ion-label stack>Certification</ion-label>
+          <ion-input [(ngModel)]="certification.attributes.certification" type="text"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col col-2 text-right>
+        <button ion-button icon-only clear color="danger" (tap)="deleteCertification(certification)">
+          <ion-icon name="trash"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-10>
+        <ion-item>
+          <ion-label stack>Date</ion-label>
+          <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="certification.attributes.date"></ion-datetime>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </div>
+</div>
+
+<ion-list-header color="purple">
+  Interests
+  <button ion-button icon-only clear color="light" (tap)="addInterest()" item-end>
+    <ion-icon name="add"></ion-icon>
+  </button>
+</ion-list-header>
+<div *ngFor="let interest of employee.employee_interests; let i = index">
+  <div [hidden]="interest.attributes._destroy && interest.attributes._destroy == 1">
+    <ion-row>
+      <ion-col col-10>
+        <ion-item>
+          <ion-label stack>Interest</ion-label>
+          <ion-input [(ngModel)]="interest.attributes.interest" type="text"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col col-2 text-right>
+        <button ion-button icon-only clear color="danger" (tap)="deleteInterest(interest)">
+          <ion-icon name="trash"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
+  </div>
+</div>
+
+<ion-list-header color="purple">
+  Soft skills
+  <button ion-button icon-only clear color="light" (tap)="addSoftSkill()" item-end>
+    <ion-icon name="add"></ion-icon>
+  </button>
+</ion-list-header>
+<div *ngFor="let soft_skill of employee.employee_soft_skills; let i = index">
+  <div [hidden]="soft_skill.attributes._destroy && soft_skill.attributes._destroy == 1">
+    <ion-row>
+      <ion-col col-10>
+        <ion-item>
+          <ion-label stack>Soft skill</ion-label>
+          <ion-input [(ngModel)]="soft_skill.attributes.soft_skill" type="text"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col col-2 text-right>
+        <button ion-button icon-only clear color="danger" (tap)="deleteSoftSkill(soft_skill)">
+          <ion-icon name="trash"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
+  </div>
+</div>
+
+<ion-row>
+  <ion-col text-right>
+    <button ion-button (tap)="save()" color="purple">Save</button>
+  </ion-col>
+</ion-row>

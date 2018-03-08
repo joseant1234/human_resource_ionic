@@ -13,6 +13,7 @@ export class SkillSelectComponent {
 
   @Input() skills :any = [];
   @Input() skills_selected : any = [];
+  @Input() employee_project_index: number;
   // @Input() project_id: number;
   @Output() onSelectSkill = new EventEmitter();
 
@@ -21,12 +22,12 @@ export class SkillSelectComponent {
 
   ngOnInit(){
     if(this.skills_selected){
-      this.skills_selected = this.skills_selected.map(el => el.skill.name)
+      this.skills_selected = this.skills_selected.map(el => el.skill.attributes.name)
     }
   }
 
   selectSkills(){
-    this.onSelectSkill.emit(this.skills_selected)
+    this.onSelectSkill.emit({skills: this.skills_selected,index: this.employee_project_index})
   }
 
 

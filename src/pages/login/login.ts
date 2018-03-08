@@ -6,7 +6,7 @@ import { HomePage } from '../home/home';
 
 import { AuthProvider } from '../../providers/auth/auth';
 
-import { USERS } from '../../services/mocks/users';
+// import { USERS } from '../../services/mocks/users';
 
 /**
  * Generated class for the LoginPage page.
