@@ -1,7 +1,7 @@
 <ion-item>
   <ion-label stacked>Skills</ion-label>
   <!-- {employee_params: {projects_attributes: {"0"=> {id: 1, .......} }}} -->
-  <ion-select [(ngModel)]="skills_selected" multiple="true" cancelText="Nah" okText="Okay!" (ngModelChange)="selectSkills()">
-    <ion-option value={{skill.name}} *ngFor="let skill of skills">{{skill.name}}</ion-option>
+  <ion-select [(ngModel)]="skills_selected" multiple="true" cancelText="Nah" okText="Okay!" (ngModelChange)="selectSkills($event)">
+    <ion-option value={{skill.id}} *ngFor="let skill of skills">{{skill.name}}</ion-option>
   </ion-select>
 </ion-item>

@@ -53,17 +53,17 @@ export class TabProjectsComponent {
     });
     alert.present();
   }
-  
+
   deleteResponsability(responsability){
     // project.employee_project_responsabilities.splice(index,1);
     responsability["attributes"]["_destroy"] = 1
   }
 
   selectSkills(data){
-    let index = data["index"];
-    data["skills"].map((skill)=>{
-      this.employee.employee_projects[index].employee_project_skills.push({skill:{name: skill}})
-    })
+    // let index = data["index"];
+    // data["skills"].map((skill)=>{
+    //   this.employee.employee_projects[index].employee_project_skills.push({skill:{name: skill}})
+    // })
   }
 
 }

@@ -29,6 +29,9 @@ export function buildParams(body){
   let valid_certifications_params = ['id','certification','date','_destroy'];
   let valid_interests_params = ['id','interest','_destroy'];
   let valid_soft_skills_params = ['id','soft_skill','_destroy'];
+  let valid_projects_params = ['id','title','role','start_date','end_date','_destroy'];
+  let valid_responsabilities_params = ['id','responsability','_destroy']
+  let valid_skills_params = ['id','skill_id','_destroy'];
 
   let employee_params = {}
  //  let keys = Object.keys(body);
@@ -89,16 +92,37 @@ export function buildParams(body){
     })
   });
 
+
   employee_params["employee_projects_attributes"] = {}
   body.employee_projects.map((project,index)=>{
     employee_params["employee_projects_attributes"][index] = {}
-    employee_params["employee_projects_attributes"][index]["id"] = project.attributes.id
-    employee_params["employee_projects_attributes"][index]["title"] = project.attributes.title
-    employee_params["employee_projects_attributes"][index]["start_at"] = project.attributes.start_at
-    employee_params["employee_projects_attributes"][index]["end_at"] = project.attributes.end_at
-    if(project.attributes._destroy) employee_params["employee_projects_attributes"][index]["_destroy"] = project.attributes._destroy
-    employee_params["employee_projects_attributes"][index]["employee_project_responsabilities"] = project.employee_project_responsabilities
+    valid_projects_params.forEach(attr => {
+      if(Object.prototype.hasOwnProperty.call(project.attributes,attr)){
+        employee_params["employee_projects_attributes"][index][attr] = project.attributes[attr];
+      }
+    });
+    employee_params["employee_projects_attributes"][index]["employee_project_responsabilities_attributes"] = {}
+    project.employee_project_responsabilities.map((responsability,responsability_index)=>{
+      employee_params["employee_projects_attributes"][index]["employee_project_responsabilities_attributes"][responsability_index] = {}
+      valid_responsabilities_params.forEach(responsability_attr => {
+        if(Object.prototype.hasOwnProperty.call(responsability.attributes,responsability_attr)){
+          employee_params["employee_projects_attributes"][index]["employee_project_responsabilities_attributes"][responsability_index][responsability_attr] = responsability.attributes[responsability_attr];
+        }
+      });
+    });
   });
+
+
+  // employee_params["employee_projects_attributes"] = {}
+  // body.employee_projects.map((project,index)=>{
+  //   employee_params["employee_projects_attributes"][index] = {}
+  //   employee_params["employee_projects_attributes"][index]["id"] = project.attributes.id
+  //   employee_params["employee_projects_attributes"][index]["title"] = project.attributes.title
+  //   employee_params["employee_projects_attributes"][index]["start_at"] = project.attributes.start_at
+  //   employee_params["employee_projects_attributes"][index]["end_at"] = project.attributes.end_at
+  //   if(project.attributes._destroy) employee_params["employee_projects_attributes"][index]["_destroy"] = project.attributes._destroy
+  //   employee_params["employee_projects_attributes"][index]["employee_project_responsabilities"] = project.employee_project_responsabilities
+  // });
 
 
 
