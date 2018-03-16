@@ -4,6 +4,7 @@ import { ViewController,NavController, NavParams  } from 'ionic-angular';
 import { PositionsProvider} from '../../providers/positions/positions';
 import { TeamsProvider } from '../../providers/teams/teams';
 import { SkillsProvider } from '../../providers/skills/skills';
+import { EmployeeProvider } from '../../providers/employee/employee';
 /**
  * Generated class for the FilterComponent component.
  *
@@ -16,9 +17,9 @@ import { SkillsProvider } from '../../providers/skills/skills';
 })
 export class FilterComponent {
 
-  position_filter : string;
-  skills_filter: string;
-  team_filter : number;
+  position_filter : string = "";
+  skills_filter: string = "";
+  team_filter : any = "";
 
   positions : any = [];
   teams : any = [];
@@ -27,22 +28,26 @@ export class FilterComponent {
   constructor(public viewCtrl: ViewController,public navCtrl: NavController, public navParams: NavParams,
               private positionsProvider: PositionsProvider,
               private teamsProvider: TeamsProvider,
-              private skillsProvider: SkillsProvider) {
+              private skillsProvider: SkillsProvider,
+              private employeesProvider : EmployeeProvider) {
 
     this.loadPositions();
     this.loadTeams();
     this.loadSkills();
     let filters = this.navParams.get('filters');
+    
+
     if(filters){
-      this.position_filter = filters.position_name;
-      this.team_filter = filters.team_id;
-      this.skills_filter = filters.skills_names;
+      this.position_filter = filters.position_name || "";
+      this.team_filter = filters.team_id || "";
+      this.skills_filter = filters.skills_names || "";
     }
+
   }
 
-  dismiss(){
+  dismiss(search = false){
     let filters = {};
-    filters = {position_name: this.position_filter,team_id: this.team_filter, skills_names: this.skills_filter};
+    filters = {position_name: this.position_filter,team_id: this.team_filter, skills_names: this.skills_filter, search: search};
     this.viewCtrl.dismiss(filters);
   }
 
@@ -60,7 +65,7 @@ export class FilterComponent {
 
   search(){
     // this.storage.set('filters',{position_name: this.position_filter,team_id: this.team_filter, skills_names: this.skills_filter});
-    this.dismiss();
+    this.dismiss(true);
   }
 
 }

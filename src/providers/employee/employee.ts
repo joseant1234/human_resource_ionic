@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
+import { URLSearchParams } from '@angular/http';
 
 import { EMPLOYEES } from '../../services/mocks/employees';
 import { EMPLOYEE } from '../../services/mocks/employee';
@@ -19,14 +20,15 @@ export class EmployeeProvider {
   constructor(public http: HttpClient) {
   }
 
-  getEmployees(jwt) : Observable<any>{
+  getEmployees(jwt,params = {}) : Observable<any>{
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
         'Authorization': 'Bearer ' + jwt
-      })
+      }),
+      params
     };
-    return this.http.get(URL + "employees",httpOptions)
+    return this.http.get(URL + "employees", httpOptions)
     // return of(EMPLOYEES);
   }
 

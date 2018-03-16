@@ -19,7 +19,7 @@ export class HomePage {
 
   employees : any = [];
   addEmployee = NewEmployeePage;
-  filters : any;
+  filters : any = [];
 
   constructor(public modalCtrl: ModalController,public navCtrl: NavController,
               private employeeProvider: EmployeeProvider, private jwtProvider: JwtProvider, private storage : Storage) {
@@ -27,6 +27,7 @@ export class HomePage {
 
   ionViewWillEnter(){
     this.loadEmployees();
+    this.filters = [];
     // this.storage.set('filters',{})
   }
 
@@ -55,6 +56,12 @@ export class HomePage {
     // })
     let modal = this.modalCtrl.create(FilterComponent,{filters: this.filters});
     modal.onDidDismiss(data => {
+      if(data && data.search){
+        this.employeeProvider.getEmployees(this.jwtProvider.jwt,{position: data.position_name, team_id: data.team_id, skills: data.skills_names.toString()})
+        .subscribe((result)=>{
+          this.employees = result.data
+        })
+      }
       this.filters = data
     });
     modal.present();
