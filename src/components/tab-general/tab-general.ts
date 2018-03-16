@@ -61,7 +61,4 @@ export class TabGeneralComponent {
     this.onSave.emit()
   }
 
-
-
-
 }

@@ -1,4 +1,11 @@
 <ion-item>
+    <img src="assets/imgs/default.png" />
+    <ion-fab right top>
+      <button (tap)="fileInput.click()" color="purple" ion-fab><ion-icon name="add"></ion-icon></button>
+    </ion-fab>
+</ion-item>
+<input type="file" class="hidden" (change)="handleFile()" #fileInput />
+<ion-item>
   <ion-label floating>First name</ion-label>
   <ion-input [(ngModel)]="employee.first_name" type="text" placeholder="First name"></ion-input>
 </ion-item>

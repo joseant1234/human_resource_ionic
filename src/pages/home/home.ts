@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { ModalController } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
 
 import { NewEmployeePage } from '../new-employee/new-employee';
 import { EditEmployeePage } from '../edit-employee/edit-employee';
+import { LoginPage } from '../login/login';
 import { FilterComponent } from '../../components/filter/filter';
 
 import { EmployeeProvider } from '../../providers/employee/employee';
@@ -20,7 +22,7 @@ export class HomePage {
   filters : any;
 
   constructor(public modalCtrl: ModalController,public navCtrl: NavController,
-              private employeeProvider: EmployeeProvider, private jwtProvider: JwtProvider ) {
+              private employeeProvider: EmployeeProvider, private jwtProvider: JwtProvider, private storage : Storage) {
   }
 
   ionViewWillEnter(){
@@ -29,7 +31,19 @@ export class HomePage {
   }
 
   loadEmployees() : void{
-    if(this.jwtProvider.jwt) this.employeeProvider.getEmployees(this.jwtProvider.jwt).subscribe(result => this.employees = result.data);
+    // improve, refactor redirect when jwt is invalid
+    if(this.jwtProvider.jwt){
+      this.employeeProvider.getEmployees(this.jwtProvider.jwt).subscribe(
+        result =>{
+          this.employees = result.data
+        },
+        (err) => {
+          if(err.status == 401){
+            this.storage.remove('jwt');
+            this.navCtrl.setRoot(LoginPage);
+          }
+        })
+    }
   }
 
   editEmployee(employee_id) : void{
