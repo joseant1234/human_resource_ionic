@@ -33,8 +33,6 @@ export class MyApp {
         this.rootPage = HomePage;
       }
     });
-
-
   }
 
   initializeApp() {

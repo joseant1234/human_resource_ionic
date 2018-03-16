@@ -17,5 +17,6 @@ export class JwtProvider {
       if(data) this.jwt = data
     })
   }
+  
 
 }
