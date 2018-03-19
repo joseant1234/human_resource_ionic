@@ -15,18 +15,18 @@ import { buildParams } from '../../commons/helpers/buildParams'
   and Angular DI.
 */
 @Injectable()
-export class EmployeeProvider {
+export class EmployeesProvider {
 
   constructor(public http: HttpClient) {
   }
 
-  getEmployees(jwt,params = {}) : Observable<any>{
+  getEmployees(jwt,filters,page) : Observable<any>{
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
         'Authorization': 'Bearer ' + jwt
       }),
-      params
+      params: Object.assign({},filters,{page: page})
     };
     return this.http.get(URL + "employees", httpOptions)
     // return of(EMPLOYEES);
@@ -41,6 +41,16 @@ export class EmployeeProvider {
     };
     return this.http.get(URL + "employees/" + employee_id,httpOptions)
     // return of(EMPLOYEE);
+  }
+
+  createEmployee(employee,jwt) : Observable<any>{
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': 'Bearer ' + jwt
+      })
+    };
+    return this.http.post(URL + "employees", { employee: buildParams(employee)}, httpOptions)
   }
 
   updateEmployee(employee,jwt) : Observable<any>{

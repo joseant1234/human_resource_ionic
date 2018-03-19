@@ -45,73 +45,87 @@ export function buildParams(body){
   employee_params["team_id"] = body.team_id
   employee_params["position"] = body.position
 
-  employee_params["employee_languages_attributes"] = {}
-  body.employee_languages.map((language,index)=>{
-    employee_params["employee_languages_attributes"][index] = {}
-    valid_languages_params.forEach(attr =>{
-      if(Object.prototype.hasOwnProperty.call(language.attributes,attr)){
-        employee_params["employee_languages_attributes"][index][attr] = language.attributes[attr];
-      }
-    });
-  });
-
-  employee_params["employee_certifications_attributes"] = {}
-  body.employee_certifications.map((certification,index)=>{
-    employee_params["employee_certifications_attributes"][index] = {}
-    valid_certifications_params.forEach(attr => {
-      if(Object.prototype.hasOwnProperty.call(certification.attributes,attr)){
-        employee_params["employee_certifications_attributes"][index][attr] = certification.attributes[attr];
-      }
-    })
-  });
-
-  employee_params["employee_interests_attributes"] = {}
-  body.employee_interests.map((interest,index)=>{
-    employee_params["employee_interests_attributes"][index] = {}
-    valid_interests_params.forEach(attr => {
-      if(Object.prototype.hasOwnProperty.call(interest.attributes,attr)){
-        employee_params["employee_interests_attributes"][index][attr] = interest.attributes[attr];
-      }
-    })
-  });
-
-  employee_params["employee_soft_skills_attributes"] = {}
-  body.employee_soft_skills.map((soft_skill,index)=>{
-    employee_params["employee_soft_skills_attributes"][index] = {}
-    valid_soft_skills_params.forEach(attr => {
-      if(Object.prototype.hasOwnProperty.call(soft_skill.attributes,attr)){
-        employee_params["employee_soft_skills_attributes"][index][attr] = soft_skill.attributes[attr];
-      }
-    })
-  });
-
-  employee_params["employee_projects_attributes"] = {}
-  body.employee_projects.map((project,index)=>{
-    employee_params["employee_projects_attributes"][index] = {}
-    valid_projects_params.forEach(attr => {
-      if(Object.prototype.hasOwnProperty.call(project.attributes,attr)){
-        employee_params["employee_projects_attributes"][index][attr] = project.attributes[attr];
-      }
-    });
-    employee_params["employee_projects_attributes"][index]["employee_project_responsabilities_attributes"] = {}
-    project.employee_project_responsabilities.map((responsability,responsability_index)=>{
-      employee_params["employee_projects_attributes"][index]["employee_project_responsabilities_attributes"][responsability_index] = {}
-      valid_responsabilities_params.forEach(responsability_attr => {
-        if(Object.prototype.hasOwnProperty.call(responsability.attributes,responsability_attr)){
-          employee_params["employee_projects_attributes"][index]["employee_project_responsabilities_attributes"][responsability_index][responsability_attr] = responsability.attributes[responsability_attr];
+  if(body.employee_languages){
+    employee_params["employee_languages_attributes"] = {}
+    body.employee_languages.map((language,index)=>{
+      employee_params["employee_languages_attributes"][index] = {}
+      valid_languages_params.forEach(attr =>{
+        if(Object.prototype.hasOwnProperty.call(language.attributes,attr)){
+          employee_params["employee_languages_attributes"][index][attr] = language.attributes[attr];
         }
       });
     });
-    employee_params["employee_projects_attributes"][index]["employee_project_skills_attributes"] = {}
-    project.employee_project_skills.map((employee_skill,employee_skill_index)=>{
-      employee_params["employee_projects_attributes"][index]["employee_project_skills_attributes"][employee_skill_index] = {}
-      valid_skills_params.forEach(skill_attr => {
-        if(Object.prototype.hasOwnProperty.call(employee_skill.attributes,skill_attr)){
-          employee_params["employee_projects_attributes"][index]["employee_project_skills_attributes"][employee_skill_index][skill_attr] = employee_skill.attributes[skill_attr];
+  }
+
+  if(body.employee_certifications){
+    employee_params["employee_certifications_attributes"] = {}
+    body.employee_certifications.map((certification,index)=>{
+      employee_params["employee_certifications_attributes"][index] = {}
+      valid_certifications_params.forEach(attr => {
+        if(Object.prototype.hasOwnProperty.call(certification.attributes,attr)){
+          employee_params["employee_certifications_attributes"][index][attr] = certification.attributes[attr];
+        }
+      })
+    });
+  }
+
+  if(body.employee_interests){
+    employee_params["employee_interests_attributes"] = {}
+    body.employee_interests.map((interest,index)=>{
+      employee_params["employee_interests_attributes"][index] = {}
+      valid_interests_params.forEach(attr => {
+        if(Object.prototype.hasOwnProperty.call(interest.attributes,attr)){
+          employee_params["employee_interests_attributes"][index][attr] = interest.attributes[attr];
+        }
+      })
+    });
+  }
+
+  if(body.employee_soft_skills){
+    employee_params["employee_soft_skills_attributes"] = {}
+    body.employee_soft_skills.map((soft_skill,index)=>{
+      employee_params["employee_soft_skills_attributes"][index] = {}
+      valid_soft_skills_params.forEach(attr => {
+        if(Object.prototype.hasOwnProperty.call(soft_skill.attributes,attr)){
+          employee_params["employee_soft_skills_attributes"][index][attr] = soft_skill.attributes[attr];
+        }
+      })
+    });
+  }
+
+  if(body.employee_projects){
+    employee_params["employee_projects_attributes"] = {}
+    body.employee_projects.map((project,index)=>{
+      employee_params["employee_projects_attributes"][index] = {}
+      valid_projects_params.forEach(attr => {
+        if(Object.prototype.hasOwnProperty.call(project.attributes,attr)){
+          employee_params["employee_projects_attributes"][index][attr] = project.attributes[attr];
         }
       });
+      if(project.employee_project_responsabilities){
+        employee_params["employee_projects_attributes"][index]["employee_project_responsabilities_attributes"] = {}
+        project.employee_project_responsabilities.map((responsability,responsability_index)=>{
+          employee_params["employee_projects_attributes"][index]["employee_project_responsabilities_attributes"][responsability_index] = {}
+          valid_responsabilities_params.forEach(responsability_attr => {
+            if(Object.prototype.hasOwnProperty.call(responsability.attributes,responsability_attr)){
+              employee_params["employee_projects_attributes"][index]["employee_project_responsabilities_attributes"][responsability_index][responsability_attr] = responsability.attributes[responsability_attr];
+            }
+          });
+        });
+      }
+      if(project.employee_project_skills.length > 0){
+        employee_params["employee_projects_attributes"][index]["employee_project_skills_attributes"] = {}
+        project.employee_project_skills.map((employee_skill,employee_skill_index)=>{
+          employee_params["employee_projects_attributes"][index]["employee_project_skills_attributes"][employee_skill_index] = {}
+          valid_skills_params.forEach(skill_attr => {
+            if(Object.prototype.hasOwnProperty.call(employee_skill.attributes,skill_attr)){
+              employee_params["employee_projects_attributes"][index]["employee_project_skills_attributes"][employee_skill_index][skill_attr] = employee_skill.attributes[skill_attr];
+            }
+          });
+        });
+      }
     });
-  });
+  }
 
   return employee_params
 }

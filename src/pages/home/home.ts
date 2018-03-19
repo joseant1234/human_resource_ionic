@@ -8,7 +8,7 @@ import { EditEmployeePage } from '../edit-employee/edit-employee';
 import { LoginPage } from '../login/login';
 import { FilterComponent } from '../../components/filter/filter';
 
-import { EmployeeProvider } from '../../providers/employee/employee';
+import { EmployeesProvider } from '../../providers/employees/employees';
 import { JwtProvider } from '../../providers/auth/jwt';
 
 @Component({
@@ -20,23 +20,29 @@ export class HomePage {
   employees : any = [];
   addEmployee = NewEmployeePage;
   filters : any = [];
+  page : number;
+  total_pages : number;
 
   constructor(public modalCtrl: ModalController,public navCtrl: NavController,
-              private employeeProvider: EmployeeProvider, private jwtProvider: JwtProvider, private storage : Storage) {
+              private employeesProvider: EmployeesProvider, private jwtProvider: JwtProvider, private storage : Storage) {
   }
 
   ionViewWillEnter(){
-    this.loadEmployees();
     this.filters = [];
+    this.page = 1;
+    this.total_pages = 1
+    this.employees = [];
+    this.loadEmployees();
     // this.storage.set('filters',{})
   }
 
-  loadEmployees() : void{
+  loadEmployees(filters_params = {}) : void{
     // improve, refactor redirect when jwt is invalid
     if(this.jwtProvider.jwt){
-      this.employeeProvider.getEmployees(this.jwtProvider.jwt).subscribe(
+      this.employeesProvider.getEmployees(this.jwtProvider.jwt,filters_params,this.page).subscribe(
         result =>{
-          this.employees = result.data
+          result.data.map(el => this.employees.push(el))
+          this.total_pages = result.pagination.total_pages
         },
         (err) => {
           if(err.status == 401){
@@ -56,15 +62,22 @@ export class HomePage {
     // })
     let modal = this.modalCtrl.create(FilterComponent,{filters: this.filters});
     modal.onDidDismiss(data => {
-      if(data && data.search){
-        this.employeeProvider.getEmployees(this.jwtProvider.jwt,{position: data.position_name, team_id: data.team_id, skills: data.skills_names.toString()})
-        .subscribe((result)=>{
-          this.employees = result.data
-        })
+      let hash_to_filter = {position: data.position_name, team_id: data.team_id, skills: data.skills_names.toString()}
+      if(data && data.did_search){
+        this.page = 1;
+        this.total_pages = 1;
+        this.employees = [];
       }
+      this.loadEmployees(hash_to_filter)
+
       this.filters = data
     });
     modal.present();
+  }
+
+  doInfinite(infiniteScroll){
+    this.page = this.page + 1
+    this.loadEmployees()
   }
 
 }

@@ -4,7 +4,6 @@ import { ViewController,NavController, NavParams  } from 'ionic-angular';
 import { PositionsProvider} from '../../providers/positions/positions';
 import { TeamsProvider } from '../../providers/teams/teams';
 import { SkillsProvider } from '../../providers/skills/skills';
-import { EmployeeProvider } from '../../providers/employee/employee';
 /**
  * Generated class for the FilterComponent component.
  *
@@ -28,14 +27,13 @@ export class FilterComponent {
   constructor(public viewCtrl: ViewController,public navCtrl: NavController, public navParams: NavParams,
               private positionsProvider: PositionsProvider,
               private teamsProvider: TeamsProvider,
-              private skillsProvider: SkillsProvider,
-              private employeesProvider : EmployeeProvider) {
+              private skillsProvider: SkillsProvider) {
 
     this.loadPositions();
     this.loadTeams();
     this.loadSkills();
     let filters = this.navParams.get('filters');
-    
+
 
     if(filters){
       this.position_filter = filters.position_name || "";
@@ -45,9 +43,9 @@ export class FilterComponent {
 
   }
 
-  dismiss(search = false){
+  dismiss(did_search = false){
     let filters = {};
-    filters = {position_name: this.position_filter,team_id: this.team_filter, skills_names: this.skills_filter, search: search};
+    filters = {position_name: this.position_filter,team_id: this.team_filter, skills_names: this.skills_filter, did_search: did_search};
     this.viewCtrl.dismiss(filters);
   }
 

@@ -21,7 +21,7 @@ import { TabGeneralComponent } from '../components/tab-general/tab-general';
 import { TabEducationsComponent } from '../components/tab-educations/tab-educations';
 import { TabProjectsComponent } from '../components/tab-projects/tab-projects';
 
-import { EmployeeProvider } from '../providers/employee/employee';
+import { EmployeesProvider } from '../providers/employees/employees';
 import { PositionsProvider } from '../providers/positions/positions';
 import { TeamsProvider } from '../providers/teams/teams';
 import { SkillsProvider } from '../providers/skills/skills';
@@ -63,7 +63,7 @@ import { JwtProvider } from '../providers/auth/jwt';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    EmployeeProvider,
+    EmployeesProvider,
     PositionsProvider,
     TeamsProvider,
     SkillsProvider,

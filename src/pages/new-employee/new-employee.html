@@ -30,7 +30,7 @@
   <ion-item>
     <ion-label>Position</ion-label>
     <ion-select [(ngModel)]="employee.position">
-      <ion-option value={position}} *ngFor="let position of positions">{{position}}</ion-option>
+      <ion-option value={{position}} *ngFor="let position of positions">{{position}}</ion-option>
     </ion-select>
   </ion-item>
   <ion-row>

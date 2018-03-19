@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams,AlertController } from 'ionic-angular';
 import { Employees } from '../../commons/employees';
 
-import { EmployeeProvider } from '../../providers/employee/employee';
+import { EmployeesProvider } from '../../providers/employees/employees';
 import { PositionsProvider} from '../../providers/positions/positions';
 import { TeamsProvider } from '../../providers/teams/teams';
 import { SkillsProvider} from '../../providers/skills/skills';
@@ -32,7 +32,7 @@ export class EditEmployeePage {
   tabs : string = "general"
 
   constructor(public navCtrl: NavController, public navParams: NavParams,private alertCtrl: AlertController,
-              private employeeProvider: EmployeeProvider,private positionsProvider: PositionsProvider,
+              private employeesProvider: EmployeesProvider,private positionsProvider: PositionsProvider,
               private teamsProvider: TeamsProvider, private skillsProvider: SkillsProvider,
               private jwtProvider: JwtProvider) {
   }
@@ -58,7 +58,7 @@ export class EditEmployeePage {
     //
     //   Object.assign(this.employee_form,this.employee);
     // });
-    this.employeeProvider.getEmployee(employee_id,this.jwtProvider.jwt)
+    this.employeesProvider.getEmployee(employee_id,this.jwtProvider.jwt)
     .subscribe((employee)=>{
       this.employee = employee.data.attributes
       // map data => relationship = [{},{},{},{}.....]
@@ -106,13 +106,12 @@ export class EditEmployeePage {
 
   save(){
 
-    this.employeeProvider.updateEmployee(this.employee,this.jwtProvider.jwt)
+    this.employeesProvider.updateEmployee(this.employee,this.jwtProvider.jwt)
     .subscribe(
       response => {
-
+        this.navCtrl.pop();
       },
       error => {
-
       }
     );
   }

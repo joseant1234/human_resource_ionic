@@ -2,7 +2,9 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { PositionsProvider} from '../../providers/positions/positions';
-import { TeamsProvider } from '../../providers/teams/teams';
+import { TeamsProvider } from '../../providers/teams/teams'
+import { EmployeesProvider } from '../../providers/employees/employees'
+import { JwtProvider } from '../../providers/auth/jwt';
 
 /**
  * Generated class for the NewEmployeePage page.
@@ -22,8 +24,11 @@ export class NewEmployeePage {
   teams: any = [];
   positions: any = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private positionsProvider: PositionsProvider,
-              private teamsProvider: TeamsProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+              private positionsProvider: PositionsProvider,
+              private teamsProvider: TeamsProvider,
+              private employeesProvider: EmployeesProvider,
+              private jwtProvider: JwtProvider) {
 
   }
 
@@ -41,7 +46,14 @@ export class NewEmployeePage {
   }
 
   save(){
-    this.navCtrl.pop();
+    this.employeesProvider.createEmployee(this.employee,this.jwtProvider.jwt)
+    .subscribe(
+      response => {
+        this.navCtrl.pop();
+      },
+      error => {
+      }
+    );
   }
 
 }
