@@ -13,29 +13,48 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-item>
-    <ion-label floating>First name</ion-label>
-    <ion-input [(ngModel)]="employee.first_name" type="text" placeholder="First name"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label floating>Last name</ion-label>
-    <ion-input [(ngModel)]="employee.last_name" type="text" placeholder="Last name"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label>Team</ion-label>
-    <ion-select [(ngModel)]="employee.team_id">
-      <ion-option value={{team.id}} *ngFor="let team of teams">{{team.name}}</ion-option>
-    </ion-select>
-  </ion-item>
-  <ion-item>
-    <ion-label>Position</ion-label>
-    <ion-select [(ngModel)]="employee.position">
-      <ion-option value={{position}} *ngFor="let position of positions">{{position}}</ion-option>
-    </ion-select>
-  </ion-item>
-  <ion-row>
-    <ion-col text-right>
-      <button ion-button (tap)="save()" color="purple">Save</button>
-    </ion-col>
-  </ion-row>
+  <ion-list>
+    <ion-item *ngIf="submit_attempt" no-lines>
+      <p class="invalid">Please fill out all details accurately.</p>
+    </ion-item>
+    <form [formGroup]="employee_form">
+      <ion-item>
+        <ion-label>First name</ion-label>
+        <ion-input formControlName="first_name" [(ngModel)]="employee.first_name" type="text"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="!employee_form.controls.first_name.valid && (employee_form.controls.first_name.dirty || submit_attempt)" no-lines>
+        <p class="invalid">Please enter a valid first name</p>
+      </ion-item>
+      <ion-item>
+        <ion-label>Last name</ion-label>
+        <ion-input formControlName="last_name"[(ngModel)]="employee.last_name" type="text"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="!employee_form.controls.last_name.valid && (employee_form.controls.last_name.dirty || submit_attempt)" no-lines>
+        <p class="invalid">Please enter a valid last name</p>
+      </ion-item>
+      <ion-item>
+        <ion-label>Team</ion-label>
+        <ion-select [(ngModel)]="employee.team_id" formControlName="team_id">
+          <ion-option value={{team.id}} *ngFor="let team of teams">{{team.name}}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item *ngIf="!employee_form.controls.team_id.valid && (employee_form.controls.team_id.dirty || submit_attempt)" no-lines>
+        <p class="invalid">Please enter a team</p>
+      </ion-item>
+      <ion-item>
+        <ion-label>Position</ion-label>
+        <ion-select [(ngModel)]="employee.position" formControlName="position">
+          <ion-option value={{position}} *ngFor="let position of positions">{{position}}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item *ngIf="!employee_form.controls.position.valid && (employee_form.controls.position.dirty || submit_attempt)" no-lines>
+        <p class="invalid">Please enter a position</p>
+      </ion-item>
+      <ion-row>
+        <ion-col text-right>
+          <button ion-button (tap)="save()" color="purple">Save</button>
+        </ion-col>
+      </ion-row>
+    </form>
+  </ion-list>
 </ion-content>

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { PositionsProvider} from '../../providers/positions/positions';
 import { TeamsProvider } from '../../providers/teams/teams'
@@ -20,16 +21,24 @@ import { JwtProvider } from '../../providers/auth/jwt';
 })
 export class NewEmployeePage {
 
-  employee: any = {};
-  teams: any = [];
-  positions: any = [];
+  employee: Object = {};
+  teams: Array = [];
+  positions: Array = [];
+  submit_attempt : boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private positionsProvider: PositionsProvider,
               private teamsProvider: TeamsProvider,
               private employeesProvider: EmployeesProvider,
-              private jwtProvider: JwtProvider) {
+              private jwtProvider: JwtProvider,
+              public formBuilder: FormBuilder) {
 
+    this.employee_form = formBuilder.group({
+      'first_name': ['', Validators.required],
+      'last_name': ['', Validators.required],
+      'team_id': ['', Validators.required],
+      'position': ['', Validators.required],
+    });
   }
 
   ionViewWillEnter(){
@@ -46,14 +55,18 @@ export class NewEmployeePage {
   }
 
   save(){
-    this.employeesProvider.createEmployee(this.employee,this.jwtProvider.jwt)
-    .subscribe(
-      response => {
-        this.navCtrl.pop();
-      },
-      error => {
-      }
-    );
+    this.submit_attempt = true
+    if(this.employee_form.valid){
+      this.employeesProvider.createEmployee(this.employee,this.jwtProvider.jwt)
+      .subscribe(
+        response => {
+          this.navCtrl.pop();
+        },
+        error => {
+          console.log(error)
+        }
+      );
+    }
   }
 
 }
