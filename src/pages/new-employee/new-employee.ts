@@ -22,9 +22,10 @@ import { JwtProvider } from '../../providers/auth/jwt';
 export class NewEmployeePage {
 
   employee: Object = {};
-  teams: Array = [];
-  positions: Array = [];
+  teams: any = [];
+  positions: any = [];
   submit_attempt : boolean = false;
+  employee_form :any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private positionsProvider: PositionsProvider,

@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams,AlertController } from 'ionic-angular';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 import { Employees } from '../../commons/employees';
 
 import { EmployeesProvider } from '../../providers/employees/employees';
-import { PositionsProvider} from '../../providers/positions/positions';
-import { TeamsProvider } from '../../providers/teams/teams';
-import { SkillsProvider} from '../../providers/skills/skills';
 import { JwtProvider } from '../../providers/auth/jwt';
 
 /**
@@ -23,29 +22,22 @@ import { JwtProvider } from '../../providers/auth/jwt';
 export class EditEmployeePage {
 
   employee : any = {};
-
-  skills : any = [];
-  employee_form: any = {};
-
-  skills_filters : string;
-
   tabs : string = "general"
+  employee_form : any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,private alertCtrl: AlertController,
-              private employeesProvider: EmployeesProvider,private positionsProvider: PositionsProvider,
-              private teamsProvider: TeamsProvider, private skillsProvider: SkillsProvider,
-              private jwtProvider: JwtProvider) {
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams,
+              private alertCtrl: AlertController,
+              private employeesProvider: EmployeesProvider,
+              private jwtProvider: JwtProvider,
+              public formBuilder: FormBuilder) {
+
+
   }
 
   ionViewWillEnter() {
     let employee_id = this.navParams.get('employee_id')
     this.loadEmployee(employee_id);
-    this.loadSkills();
-  }
-
-
-  loadSkills(){
-    this.skillsProvider.getSkills().subscribe(skills => this.skills = skills);
   }
 
   loadEmployee(employee_id){
@@ -67,45 +59,7 @@ export class EditEmployeePage {
     })
   }
 
-
-  addProject(){
-    this.employee.employee_projects.push({attributes:{},employee_responsabilities: []})
-  }
-
-  deleteProject(index){
-    this.employee.employee_projects.splice(index,1)
-  }
-
-  addResponsability(project){
-    let alert = this.alertCtrl.create({
-      title: "Add responsability",
-      inputs: [
-        {
-          name: 'responsability',
-          placeholder: 'responsability'
-        }
-      ],
-      buttons: ['Cancelar',{
-        text: 'Agregar',
-        handler: data => {
-          if(!data.responsability) return false;
-          project.employee_project_responsabilities.push({attributes:{responsability: data.responsability}})
-        }
-      }]
-    });
-    alert.present();
-  }
-  deleteResponsability(project,index){
-    project.employee_project_responsabilities.splice(index,1);
-  }
-
-  selectSkills(skills){
-    // this.employee_form.project
-  }
-
-
   save(){
-
     this.employeesProvider.updateEmployee(this.employee,this.jwtProvider.jwt)
     .subscribe(
       response => {
@@ -116,7 +70,4 @@ export class EditEmployeePage {
     );
   }
 
-    // return employee_skills.map((el)=>{
-    //   el.skill.name
-    // })
 }

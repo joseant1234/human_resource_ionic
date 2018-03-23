@@ -1,3 +1,5 @@
+
+<form #employee_form="ngForm">
 <ion-item>
     <img src="assets/imgs/default.png" />
     <ion-fab right top>
@@ -7,23 +9,37 @@
 <input type="file" class="hidden" (change)="handleFile()" #fileInput />
 <ion-item>
   <ion-label floating>First name</ion-label>
-  <ion-input [(ngModel)]="employee.first_name" type="text" placeholder="First name"></ion-input>
+  <ion-input [(ngModel)]="employee.first_name" type="text"
+    name="first_name" placeholder="First name" required
+    #first_name="ngModel"></ion-input>
+</ion-item>
+<ion-item [hidden]="first_name.valid || first_name.pristine" no-lines>
+  <p class="invalid">Please enter a valid first name</p>
 </ion-item>
 <ion-item>
   <ion-label floating>Last name</ion-label>
-  <ion-input [(ngModel)]="employee.last_name" type="text" placeholder="Last name"></ion-input>
+  <ion-input [(ngModel)]="employee.last_name" type="text" name="last_name" placeholder="Last name" #last_name="ngModel" required></ion-input>
+</ion-item>
+<ion-item [hidden]="last_name.valid || last_name.pristine" no-lines>
+  <p class="invalid">Please enter a valid last_name</p>
 </ion-item>
 <ion-item>
   <ion-label>Team</ion-label>
-  <ion-select [(ngModel)]="employee.team_id">
+  <ion-select [(ngModel)]="employee.team_id" name="team_id" #team_id="ngModel" required>
     <ion-option value={{team.id}} *ngFor="let team of teams">{{team.name}}</ion-option>
   </ion-select>
 </ion-item>
+<ion-item [hidden]="team_id.valid || team_id.pristine" no-lines>
+  <p class="invalid">Please select a team</p>
+</ion-item>
 <ion-item>
   <ion-label>Position</ion-label>
-  <ion-select [(ngModel)]="employee.position">
+  <ion-select [(ngModel)]="employee.position" name="position" #position="ngModel" required>
     <ion-option value={{position}} *ngFor="let position of positions">{{position}}</ion-option>
   </ion-select>
+</ion-item>
+<ion-item [hidden]="position.valid || position.pristine" no-lines>
+  <p class="invalid">Please select a position</p>
 </ion-item>
 
 <ion-list-header color="purple">
@@ -38,7 +54,10 @@
       <ion-col col-10>
         <ion-item>
           <ion-label stack>Certification</ion-label>
-          <ion-input [(ngModel)]="certification.attributes.certification" type="text"></ion-input>
+          <ion-input [(ngModel)]="certification.attributes.certification" type="text" name="certification_{{i}}" #certification_export="ngModel" required></ion-input>
+        </ion-item>
+        <ion-item [hidden]="certification_export.valid || certification_export.pristine" no-lines>
+          <p class="invalid">Please enter a valid certification</p>
         </ion-item>
       </ion-col>
       <ion-col col-2 text-right>
@@ -51,13 +70,16 @@
       <ion-col col-10>
         <ion-item>
           <ion-label stack>Date</ion-label>
-          <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="certification.attributes.date"></ion-datetime>
+          <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="certification.attributes.date" name="date_{{i}}" #date_export="ngModel" required></ion-datetime>
+        </ion-item>
+        <ion-item [hidden]="date_export.valid || date_export.pristine" no-lines>
+          <p class="invalid">Please select a date</p>
         </ion-item>
       </ion-col>
     </ion-row>
   </div>
 </div>
-
+</form>
 <ion-list-header color="purple">
   Interests
   <button ion-button icon-only clear color="light" (tap)="addInterest()" item-end>

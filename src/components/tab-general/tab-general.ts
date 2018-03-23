@@ -18,9 +18,11 @@ export class TabGeneralComponent {
   @Output() onSave = new EventEmitter();
   positions : any = [];
   teams : any = [];
+  employee_form : any;
 
   constructor(private positionsProvider: PositionsProvider,
               private teamsProvider: TeamsProvider) {
+
     this.loadPositions();
     this.loadTeams();
   }
@@ -34,7 +36,7 @@ export class TabGeneralComponent {
   }
 
   addCertification(){
-    this.employee.employee_certifications.push({attributes: {}})
+    this.employee.employee_certifications.push({attributes: {} })
   }
 
   deleteCertification(certification){
@@ -58,7 +60,9 @@ export class TabGeneralComponent {
   }
 
   save(){
-    this.onSave.emit()
+    if(this.employee_form.valid){
+      this.onSave.emit()
+    }
   }
 
 }
