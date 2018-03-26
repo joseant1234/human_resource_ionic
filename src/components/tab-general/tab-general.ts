@@ -1,4 +1,5 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter,ViewChild } from '@angular/core';
+import { ControlContainer, NgForm} from '@angular/forms'
 
 import { PositionsProvider} from '../../providers/positions/positions';
 import { TeamsProvider } from '../../providers/teams/teams';
@@ -10,15 +11,23 @@ import { TeamsProvider } from '../../providers/teams/teams';
  */
 @Component({
   selector: 'tab-general',
-  templateUrl: 'tab-general.html'
+  templateUrl: 'tab-general.html',
+  viewProviders: [
+   {
+     provide: ControlContainer,
+     useExisting: NgForm
+   }
+  ]
 })
 export class TabGeneralComponent {
 
   @Input() employee : any = {};
+  @Input() employee_form : any;
   @Output() onSave = new EventEmitter();
+  @ViewChild('tabGeneralForm') public form: NgForm;
   positions : any = [];
   teams : any = [];
-  employee_form : any;
+  // employee_form : any;
 
   constructor(private positionsProvider: PositionsProvider,
               private teamsProvider: TeamsProvider) {
@@ -60,9 +69,7 @@ export class TabGeneralComponent {
   }
 
   save(){
-    if(this.employee_form.valid){
-      this.onSave.emit()
-    }
+    this.onSave.emit();
   }
 
 }

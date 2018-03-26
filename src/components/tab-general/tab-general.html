@@ -1,135 +1,167 @@
+<div ngModelGroup="general">
+  <ion-item>
+      <img src="assets/imgs/default.png" />
+      <ion-fab right top>
+        <button (tap)="fileInput.click()" color="purple" ion-fab><ion-icon name="add"></ion-icon></button>
+      </ion-fab>
+  </ion-item>
+  <input type="file" class="hidden" (change)="handleFile()" #fileInput />
 
-<form #employee_form="ngForm">
-<ion-item>
-    <img src="assets/imgs/default.png" />
-    <ion-fab right top>
-      <button (tap)="fileInput.click()" color="purple" ion-fab><ion-icon name="add"></ion-icon></button>
-    </ion-fab>
-</ion-item>
-<input type="file" class="hidden" (change)="handleFile()" #fileInput />
-<ion-item>
-  <ion-label floating>First name</ion-label>
-  <ion-input [(ngModel)]="employee.first_name" type="text"
-    name="first_name" placeholder="First name" required
-    #first_name="ngModel"></ion-input>
-</ion-item>
-<ion-item [hidden]="first_name.valid || first_name.pristine" no-lines>
-  <p class="invalid">Please enter a valid first name</p>
-</ion-item>
-<ion-item>
-  <ion-label floating>Last name</ion-label>
-  <ion-input [(ngModel)]="employee.last_name" type="text" name="last_name" placeholder="Last name" #last_name="ngModel" required></ion-input>
-</ion-item>
-<ion-item [hidden]="last_name.valid || last_name.pristine" no-lines>
-  <p class="invalid">Please enter a valid last_name</p>
-</ion-item>
-<ion-item>
-  <ion-label>Team</ion-label>
-  <ion-select [(ngModel)]="employee.team_id" name="team_id" #team_id="ngModel" required>
-    <ion-option value={{team.id}} *ngFor="let team of teams">{{team.name}}</ion-option>
-  </ion-select>
-</ion-item>
-<ion-item [hidden]="team_id.valid || team_id.pristine" no-lines>
-  <p class="invalid">Please select a team</p>
-</ion-item>
-<ion-item>
-  <ion-label>Position</ion-label>
-  <ion-select [(ngModel)]="employee.position" name="position" #position="ngModel" required>
-    <ion-option value={{position}} *ngFor="let position of positions">{{position}}</ion-option>
-  </ion-select>
-</ion-item>
-<ion-item [hidden]="position.valid || position.pristine" no-lines>
-  <p class="invalid">Please select a position</p>
-</ion-item>
+  <ion-item>
+    <ion-label floating>First name</ion-label>
+    <ion-input [(ngModel)]="employee.first_name"
+      type="text"
+      name="first_name"
+      placeholder="First name"
+      #first_name="ngModel"
+      required></ion-input>
+  </ion-item>
+  <ion-item [hidden]="first_name.valid || first_name.pristine" no-lines>
+    <p class="invalid">Please enter a valid first name</p>
+  </ion-item>
+  <ion-item>
+    <ion-label floating>Last name</ion-label>
+    <ion-input [(ngModel)]="employee.last_name"
+      type="text"
+      name="last_name"
+      placeholder="Last name"
+      #last_name="ngModel" r
+      equired></ion-input>
+  </ion-item>
+  <ion-item [hidden]="last_name.valid || last_name.pristine" no-lines>
+    <p class="invalid">Please enter a valid last_name</p>
+  </ion-item>
+  <ion-item>
+    <ion-label>Team</ion-label>
+    <ion-select [(ngModel)]="employee.team_id"
+      name="team_id"
+      #team_id="ngModel"
+      required>
+      <ion-option value={{team.id}} *ngFor="let team of teams">{{team.name}}</ion-option>
+    </ion-select>
+  </ion-item>
+  <ion-item [hidden]="team_id.valid || team_id.pristine" no-lines>
+    <p class="invalid">Please select a team</p>
+  </ion-item>
+  <ion-item>
+    <ion-label>Position</ion-label>
+    <ion-select [(ngModel)]="employee.position"
+      name="position"
+      #position="ngModel"
+      required>
+      <ion-option value={{position}} *ngFor="let position of positions">{{position}}</ion-option>
+    </ion-select>
+  </ion-item>
+  <ion-item [hidden]="position.valid || position.pristine" no-lines>
+    <p class="invalid">Please select a position</p>
+  </ion-item>
 
-<ion-list-header color="purple">
-  Certifications
-  <button ion-button icon-only clear color="light" (tap)="addCertification()" item-end>
-    <ion-icon name="add"></ion-icon>
-  </button>
-</ion-list-header>
-<div *ngFor="let certification of employee.employee_certifications; let i = index">
-  <div [hidden]="certification.attributes._destroy && certification.attributes._destroy == 1">
-    <ion-row>
-      <ion-col col-10>
-        <ion-item>
-          <ion-label stack>Certification</ion-label>
-          <ion-input [(ngModel)]="certification.attributes.certification" type="text" name="certification_{{i}}" #certification_export="ngModel" required></ion-input>
-        </ion-item>
-        <ion-item [hidden]="certification_export.valid || certification_export.pristine" no-lines>
-          <p class="invalid">Please enter a valid certification</p>
-        </ion-item>
-      </ion-col>
-      <ion-col col-2 text-right>
-        <button ion-button icon-only clear color="danger" (tap)="deleteCertification(certification)">
-          <ion-icon name="trash"></ion-icon>
-        </button>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col col-10>
-        <ion-item>
-          <ion-label stack>Date</ion-label>
-          <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="certification.attributes.date" name="date_{{i}}" #date_export="ngModel" required></ion-datetime>
-        </ion-item>
-        <ion-item [hidden]="date_export.valid || date_export.pristine" no-lines>
-          <p class="invalid">Please select a date</p>
-        </ion-item>
-      </ion-col>
-    </ion-row>
+  <ion-list-header color="purple">
+    Certifications
+    <button ion-button icon-only clear color="light" (tap)="addCertification()" item-end>
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-list-header>
+  <div *ngFor="let certification of employee.employee_certifications; let i = index">
+    <div [hidden]="certification.attributes._destroy && certification.attributes._destroy == 1">
+      <ion-row>
+        <ion-col col-10>
+          <ion-item>
+            <ion-label stack>Certification</ion-label>
+            <ion-input [(ngModel)]="certification.attributes.certification"
+                type="text"
+                name="certification_{{i}}"
+                #certification_export="ngModel"
+                [required]="certification.attributes._destroy != 1"></ion-input>
+          </ion-item>
+          <ion-item [hidden]="certification_export.valid || certification_export.pristine" no-lines>
+            <p class="invalid">Please enter a valid certification</p>
+          </ion-item>
+        </ion-col>
+        <ion-col col-2 text-right>
+          <button ion-button icon-only clear color="danger" (tap)="deleteCertification(certification)">
+            <ion-icon name="trash"></ion-icon>
+          </button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-10>
+          <ion-item>
+            <ion-label stack>Date</ion-label>
+            <ion-datetime displayFormat="MMM DD YYYY"
+              [(ngModel)]="certification.attributes.date"
+              name="date_{{i}}"
+              #date_export="ngModel"
+              [required]="certification.attributes._destroy != 1"></ion-datetime>
+          </ion-item>
+          <ion-item [hidden]="date_export.valid || date_export.pristine" no-lines>
+            <p class="invalid">Please select a date</p>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </div>
+  </div>
+
+  <ion-list-header color="purple">
+    Interests
+    <button ion-button icon-only clear color="light" (tap)="addInterest()" item-end>
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-list-header>
+  <div *ngFor="let interest of employee.employee_interests; let i = index">
+    <div [hidden]="interest.attributes._destroy && interest.attributes._destroy == 1">
+      <ion-row>
+        <ion-col col-10>
+          <ion-item>
+            <ion-label stack>Interest</ion-label>
+            <ion-input [(ngModel)]="interest.attributes.interest"
+              type="text"
+              name="interest_{{i}}"
+              #interest_export="ngModel"
+              [required]="interest.attributes._destroy != 1"
+              ></ion-input>
+          </ion-item>
+          <ion-item [hidden]="interest_export.valid || interest_export.pristine" no-lines>
+            <p class="invalid">Please enter a valid interest</p>
+          </ion-item>
+        </ion-col>
+        <ion-col col-2 text-right>
+          <button ion-button icon-only clear color="danger" (tap)="deleteInterest(interest)">
+            <ion-icon name="trash"></ion-icon>
+          </button>
+        </ion-col>
+      </ion-row>
+    </div>
+  </div>
+
+  <ion-list-header color="purple">
+    Soft skills
+    <button ion-button icon-only clear color="light" (tap)="addSoftSkill()" item-end>
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-list-header>
+  <div *ngFor="let soft_skill of employee.employee_soft_skills; let i = index">
+    <div [hidden]="soft_skill.attributes._destroy && soft_skill.attributes._destroy == 1">
+      <ion-row>
+        <ion-col col-10>
+          <ion-item>
+            <ion-label stack>Soft skill</ion-label>
+            <ion-input [(ngModel)]="soft_skill.attributes.soft_skill"
+              type="text"
+              name="soft_skill_{{i}}"
+              #soft_skill_export="ngModel"
+              [required]="soft_skill.attributes._destroy != 1"></ion-input>
+          </ion-item>
+          <ion-item [hidden]="soft_skill_export.valid || soft_skill_export.pristine" no-lines>
+            <p class="invalid">Please enter a valid soft skill</p>
+          </ion-item>
+        </ion-col>
+        <ion-col col-2 text-right>
+          <button ion-button icon-only clear color="danger" (tap)="deleteSoftSkill(soft_skill)">
+            <ion-icon name="trash"></ion-icon>
+          </button>
+        </ion-col>
+      </ion-row>
+    </div>
   </div>
 </div>
-</form>
-<ion-list-header color="purple">
-  Interests
-  <button ion-button icon-only clear color="light" (tap)="addInterest()" item-end>
-    <ion-icon name="add"></ion-icon>
-  </button>
-</ion-list-header>
-<div *ngFor="let interest of employee.employee_interests; let i = index">
-  <div [hidden]="interest.attributes._destroy && interest.attributes._destroy == 1">
-    <ion-row>
-      <ion-col col-10>
-        <ion-item>
-          <ion-label stack>Interest</ion-label>
-          <ion-input [(ngModel)]="interest.attributes.interest" type="text"></ion-input>
-        </ion-item>
-      </ion-col>
-      <ion-col col-2 text-right>
-        <button ion-button icon-only clear color="danger" (tap)="deleteInterest(interest)">
-          <ion-icon name="trash"></ion-icon>
-        </button>
-      </ion-col>
-    </ion-row>
-  </div>
-</div>
-
-<ion-list-header color="purple">
-  Soft skills
-  <button ion-button icon-only clear color="light" (tap)="addSoftSkill()" item-end>
-    <ion-icon name="add"></ion-icon>
-  </button>
-</ion-list-header>
-<div *ngFor="let soft_skill of employee.employee_soft_skills; let i = index">
-  <div [hidden]="soft_skill.attributes._destroy && soft_skill.attributes._destroy == 1">
-    <ion-row>
-      <ion-col col-10>
-        <ion-item>
-          <ion-label stack>Soft skill</ion-label>
-          <ion-input [(ngModel)]="soft_skill.attributes.soft_skill" type="text"></ion-input>
-        </ion-item>
-      </ion-col>
-      <ion-col col-2 text-right>
-        <button ion-button icon-only clear color="danger" (tap)="deleteSoftSkill(soft_skill)">
-          <ion-icon name="trash"></ion-icon>
-        </button>
-      </ion-col>
-    </ion-row>
-  </div>
-</div>
-
-<ion-row>
-  <ion-col text-right>
-    <button ion-button (tap)="save()" color="purple">Save</button>
-  </ion-col>
-</ion-row>

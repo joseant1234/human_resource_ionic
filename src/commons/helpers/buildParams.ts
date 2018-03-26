@@ -44,6 +44,8 @@ export function buildParams(body){
   employee_params["last_name"] = body.last_name
   employee_params["team_id"] = body.team_id
   employee_params["position"] = body.position
+  employee_params["degree"] = body.degree
+  employee_params["level"] = body.level
 
   if(body.employee_languages){
     employee_params["employee_languages_attributes"] = {}

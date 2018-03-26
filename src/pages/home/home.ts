@@ -5,6 +5,7 @@ import { Storage } from '@ionic/storage';
 
 import { NewEmployeePage } from '../new-employee/new-employee';
 import { EditEmployeePage } from '../edit-employee/edit-employee';
+import { ShowEmployeePage } from '../show-employee/show-employee';
 import { LoginPage } from '../login/login';
 import { FilterComponent } from '../../components/filter/filter';
 
@@ -55,6 +56,10 @@ export class HomePage {
 
   editEmployee(employee_id) : void{
     this.navCtrl.push(EditEmployeePage,{employee_id: employee_id})
+  }
+
+  showEmployee(employee_id) : void{
+    this.navCtrl.push(ShowEmployeePage,{employee_id: employee_id})
   }
 
   openFilterModal() : void{

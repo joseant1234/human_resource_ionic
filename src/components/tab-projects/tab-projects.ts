@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { ControlContainer, NgForm } from '@angular/forms'
 import { AlertController } from 'ionic-angular';
 
 import { SkillsProvider} from '../../providers/skills/skills';
@@ -10,7 +11,13 @@ import { SkillsProvider} from '../../providers/skills/skills';
  */
 @Component({
   selector: 'tab-projects',
-  templateUrl: 'tab-projects.html'
+  templateUrl: 'tab-projects.html',
+  viewProviders: [
+   {
+     provide: ControlContainer,
+     useExisting: NgForm
+   }
+  ]
 })
 export class TabProjectsComponent {
 
@@ -27,7 +34,7 @@ export class TabProjectsComponent {
   }
 
   addProject(){
-    this.employee.employee_projects.push({attributes:{},employee_project_responsabilities: []})
+    this.employee.employee_projects.push({attributes:{},employee_project_responsabilities: [], employee_project_skills: []})
   }
 
   deleteProject(project){
@@ -46,7 +53,7 @@ export class TabProjectsComponent {
       buttons: ['Cancelar',{
         text: 'Agregar',
         handler: data => {
-          if(!data.responsability) return false;
+          if(!data.responsability.trim()) return false;
           project.employee_project_responsabilities.push({attributes:{responsability: data.responsability}})
         }
       }]

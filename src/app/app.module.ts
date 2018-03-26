@@ -3,6 +3,7 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { IonicStorageModule } from '@ionic/storage';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 import { MyApp } from './app.component';
 import { LoginPage } from '../pages/login/login';
@@ -14,6 +15,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { NewEmployeePage } from '../pages/new-employee/new-employee';
 import { EditEmployeePage } from '../pages/edit-employee/edit-employee';
+import { ShowEmployeePage } from '../pages/show-employee/show-employee';
 
 import { FilterComponent } from '../components/filter/filter';
 import { SkillSelectComponent } from '../components/skill-select/skill-select';
@@ -36,6 +38,7 @@ import { JwtProvider } from '../providers/auth/jwt';
     NewEmployeePage,
     EditEmployeePage,
     LoginPage,
+    ShowEmployeePage,
     FilterComponent,
     SkillSelectComponent,
     TabGeneralComponent,
@@ -45,6 +48,7 @@ import { JwtProvider } from '../providers/auth/jwt';
   imports: [
     BrowserModule,
     HttpClientModule,
+    FormsModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot()
   ],
@@ -56,6 +60,7 @@ import { JwtProvider } from '../providers/auth/jwt';
     NewEmployeePage,
     EditEmployeePage,
     LoginPage,
+    ShowEmployeePage,
     FilterComponent,
     SkillSelectComponent,
   ],

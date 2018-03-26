@@ -26,19 +26,30 @@
 
 </ion-header>
 
-
 <ion-content padding>
   <div [ngSwitch]="tabs">
-    <ion-list *ngSwitchCase="'general'">
-      <tab-general [employee]="employee" (onSave)="save($event)"></tab-general>
-    </ion-list>
+    <form #employee_form="ngForm">
 
-    <ion-list *ngSwitchCase="'educations'">
-      <tab-educations [employee]="employee"></tab-educations>
-    </ion-list>
+      <ion-list *ngSwitchCase="'general'">
+        <tab-general [employee]="employee" (onSave)="save($event)"></tab-general>
+      </ion-list>
 
-    <ion-list *ngSwitchCase="'projects'">
-      <tab-projects [employee]="employee"></tab-projects>
-    </ion-list>
+      <ion-list *ngSwitchCase="'educations'">
+        <tab-educations [employee]="employee"></tab-educations>
+      </ion-list>
+
+      <ion-list *ngSwitchCase="'projects'">
+        <tab-projects [employee]="employee"></tab-projects>
+      </ion-list>
+
+      <ion-row>
+        <ion-col text-right>
+          <button ion-button (tap)="save()"
+            color="purple"
+            [disabled]="!employee_form.form.valid">Save</button>
+        </ion-col>
+      </ion-row>
+
+    </form>
   </div>
 </ion-content>

@@ -1,4 +1,5 @@
 import { Component, Input, Output } from '@angular/core';
+import { ControlContainer, NgForm} from '@angular/forms'
 
 /**
  * Generated class for the TabEducationsComponent component.
@@ -8,7 +9,13 @@ import { Component, Input, Output } from '@angular/core';
  */
 @Component({
   selector: 'tab-educations',
-  templateUrl: 'tab-educations.html'
+  templateUrl: 'tab-educations.html',
+  viewProviders: [
+   {
+     provide: ControlContainer,
+     useExisting: NgForm
+   }
+  ]
 })
 export class TabEducationsComponent {
 

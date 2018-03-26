@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams,AlertController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -23,7 +23,7 @@ export class EditEmployeePage {
 
   employee : any = {};
   tabs : string = "general"
-  employee_form : any;
+  @ViewChild('employee_form') employee_form : any;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -60,14 +60,16 @@ export class EditEmployeePage {
   }
 
   save(){
-    this.employeesProvider.updateEmployee(this.employee,this.jwtProvider.jwt)
-    .subscribe(
-      response => {
-        this.navCtrl.pop();
-      },
-      error => {
-      }
-    );
+    if(this.employee_form.form.valid){
+      this.employeesProvider.updateEmployee(this.employee,this.jwtProvider.jwt)
+      .subscribe(
+        response => {
+          this.navCtrl.pop();
+        },
+        error => {
+        }
+      );
+    }
   }
 
 }
