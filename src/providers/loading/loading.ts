@@ -10,9 +10,10 @@ import { LoadingController } from 'ionic-angular';
 */
 @Injectable()
 export class LoadingProvider {
+  private loading : any = {};
 
   constructor(private loadingCtrl : LoadingController) {}
-
+  
   presentLoadingCustom() {
    	this.loading = this.loadingCtrl.create({
       spinner: 'circles',
