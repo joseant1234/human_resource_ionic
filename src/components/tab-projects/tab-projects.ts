@@ -66,11 +66,4 @@ export class TabProjectsComponent {
     responsability["attributes"]["_destroy"] = 1
   }
 
-  selectSkills(data){
-    // let index = data["index"];
-    // data["skills"].map((skill)=>{
-    //   this.employee.employee_projects[index].employee_project_skills.push({skill:{name: skill}})
-    // })
-  }
-
 }

@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PositionsProvider} from '../../providers/positions/positions';
 import { TeamsProvider } from '../../providers/teams/teams'
 import { EmployeesProvider } from '../../providers/employees/employees'
-import { JwtProvider } from '../../providers/auth/jwt';
+import { LoadingProvider } from '../../providers/loading/loading';
 
 /**
  * Generated class for the NewEmployeePage page.
@@ -31,8 +31,8 @@ export class NewEmployeePage {
               private positionsProvider: PositionsProvider,
               private teamsProvider: TeamsProvider,
               private employeesProvider: EmployeesProvider,
-              private jwtProvider: JwtProvider,
-              public formBuilder: FormBuilder) {
+              public formBuilder: FormBuilder,
+              private loadingProvider: LoadingProvider) {
 
     this.employee_form = formBuilder.group({
       'first_name': ['', Validators.required],
@@ -58,12 +58,15 @@ export class NewEmployeePage {
   save(){
     this.submit_attempt = true
     if(this.employee_form.valid){
-      this.employeesProvider.createEmployee(this.employee,this.jwtProvider.jwt)
+      this.loadingProvider.presentLoadingCustom();
+      this.employeesProvider.createEmployee(this.employee)
       .subscribe(
         response => {
+          this.loadingProvider.dismiss();
           this.navCtrl.pop();
         },
         error => {
+          this.loadingProvider.dismiss();
           console.log(error)
         }
       );

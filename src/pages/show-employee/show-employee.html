@@ -8,8 +8,12 @@
 
   <ion-navbar color="purple">
     <ion-title *ngIf="employee">{{employee.first_name}} {{employee.last_name}}</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="downloadEmployee(employee.id)" >
+        <ion-icon name="download"></ion-icon>
+      </button>
+   </ion-buttons>
   </ion-navbar>
-
 </ion-header>
 
 

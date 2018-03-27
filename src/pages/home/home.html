@@ -8,7 +8,7 @@
       <button ion-button icon-only (click)="openFilterModal()" >
         <ion-icon name="search"></ion-icon>
       </button>
-     <button ion-button icon-only [navPush]="addEmployee" >
+     <button ion-button icon-only [navPush]="addEmployeePage" >
        <ion-icon name="add"></ion-icon>
      </button>
    </ion-buttons>
@@ -17,29 +17,30 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-card *ngFor="let employee of employees">
-    <ion-card-content>
-      <img src="data:image/png;base64,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"/>
-       <ion-card-title>
-        {{employee.attributes.first_name}} {{employee.attributes.last_name}}
-        </ion-card-title>
-        <p>{{employee.attributes.position}}</p>
-    </ion-card-content>
-    <ion-row>
-      <ion-col text-right>
-        <button ion-button icon-only clear small color="purple" (click)="showEmployee(employee.attributes.id)">
-          <ion-icon name="eye"></ion-icon>
-        </button>
-        <button ion-button icon-only clear small color="purple" (click)="editEmployee(employee.attributes.id)">
-          <ion-icon name="brush"></ion-icon>
-        </button>
-      </ion-col>
-    </ion-row>
+  <div *ngIf="employees">
+    <ion-card *ngFor="let employee of employees">
+      <ion-card-content>
+        <img src="data:image/png;base64,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"/>
+         <ion-card-title>
+          {{employee.attributes.first_name}} {{employee.attributes.last_name}}
+          </ion-card-title>
+          <p>{{employee.attributes.position}}</p>
+      </ion-card-content>
+      <ion-row>
+        <ion-col text-right>
+          <button ion-button icon-only clear small color="purple" (click)="showEmployee(employee.attributes.id)">
+            <ion-icon name="eye"></ion-icon>
+          </button>
+          <button ion-button icon-only clear small color="purple" (click)="editEmployee(employee.attributes.id)">
+            <ion-icon name="brush"></ion-icon>
+          </button>
+        </ion-col>
+      </ion-row>
 
-  </ion-card>
+    </ion-card>
 
-  <ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="page < total_pages" loadingSpinner="bubbles" loadingText="Loading more data...">
-    <ion-infinite-scroll-content></ion-infinite-scroll-content>
-  </ion-infinite-scroll>
-
+    <ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="current_page < total_pages" loadingSpinner="bubbles" loadingText="Loading more data...">
+      <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </div>
 </ion-content>

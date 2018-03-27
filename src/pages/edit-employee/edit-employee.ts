@@ -1,11 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams,AlertController } from 'ionic-angular';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 
 import { Employees } from '../../commons/employees';
 
 import { EmployeesProvider } from '../../providers/employees/employees';
-import { JwtProvider } from '../../providers/auth/jwt';
+import { LoadingProvider } from '../../providers/loading/loading';
 
 /**
  * Generated class for the EditEmployeePage page.
@@ -29,13 +28,11 @@ export class EditEmployeePage {
               public navParams: NavParams,
               private alertCtrl: AlertController,
               private employeesProvider: EmployeesProvider,
-              private jwtProvider: JwtProvider,
-              public formBuilder: FormBuilder) {
-
-
+              private loadingProvider: LoadingProvider) {
   }
 
   ionViewWillEnter() {
+    this.loadingProvider.presentLoadingCustom();
     let employee_id = this.navParams.get('employee_id')
     this.loadEmployee(employee_id);
   }
@@ -50,23 +47,27 @@ export class EditEmployeePage {
     //
     //   Object.assign(this.employee_form,this.employee);
     // });
-    this.employeesProvider.getEmployee(employee_id,this.jwtProvider.jwt)
+    this.employeesProvider.getEmployee(employee_id)
     .subscribe((employee)=>{
       this.employee = employee.data.attributes
       // map data => relationship = [{},{},{},{}.....]
       let relationships = Object.keys(employee.data.relationships)
       relationships.map((relationship)=> this.employee[relationship] = employee.data.relationships[relationship])
+      this.loadingProvider.dismiss();
     })
   }
 
   save(){
     if(this.employee_form.form.valid){
-      this.employeesProvider.updateEmployee(this.employee,this.jwtProvider.jwt)
+      this.loadingProvider.presentLoadingCustom();
+      this.employeesProvider.updateEmployee(this.employee)
       .subscribe(
         response => {
+          this.loadingProvider.dismiss();
           this.navCtrl.pop();
         },
         error => {
+          this.loadingProvider.dismiss();
         }
       );
     }

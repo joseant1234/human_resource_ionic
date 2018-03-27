@@ -34,7 +34,6 @@ export class FilterComponent {
     this.loadSkills();
     let filters = this.navParams.get('filters');
 
-
     if(filters){
       this.position_filter = filters.position_name || "";
       this.team_filter = filters.team_id || "";
