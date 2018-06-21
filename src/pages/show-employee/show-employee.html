@@ -1,0 +1,70 @@
+<!--
+  Generated template for the ShowEmployeePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color="purple">
+    <ion-title *ngIf="employee">{{employee.first_name}} {{employee.last_name}}</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="downloadEmployee(employee.id)" >
+        <ion-icon name="download"></ion-icon>
+      </button>
+   </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <ion-card *ngIf="employee">
+    <img src="assets/imgs/default.png" *ngIf="!employee.photo"/>
+    <img src="{{employee.photo}}" *ngIf="employee.photo"/>
+    <ion-card-content>
+      <ion-card-title>
+        {{employee.first_name}} {{employee.last_name}}
+      </ion-card-title>
+      <p>
+        {{employee.summary}}
+      </p>
+      <ion-list class="top-space">
+        <ion-list-header color="purple">
+          Education
+          <ion-icon name="book" item-end></ion-icon>
+        </ion-list-header>
+        <ion-item>
+          <p class="bold">{{employee.degree}}</p>
+          <p>{{employee.college}}</p>
+        </ion-item>
+
+        <ion-list-header color="purple">
+          Certifications
+          <ion-icon name="flag" item-end></ion-icon>
+        </ion-list-header>
+        <ion-item *ngFor="let certification of employee.employee_certifications">
+          <p class="bold">{{certification.attributes.certification}}</p>
+          <p>{{certification.attributes.date}}</p>
+        </ion-item>
+
+        <ion-list-header color="purple">
+          Area of interest
+          <ion-icon name="star" item-end></ion-icon>
+        </ion-list-header>
+        <ion-item *ngFor="let interest of employee.employee_interests">
+          <p class="bold">{{interest.attributes.interest}}</p>
+        </ion-item>
+
+        <ion-list-header color="purple">
+          Technical knowledge
+          <ion-icon name="document" item-end></ion-icon>
+        </ion-list-header>
+        <ion-item *ngFor="let employee_skill of employee.employee_skills">
+          <p class="bold">{{employee_skill.skill.attributes.name}}</p>
+        </ion-item>
+      </ion-list>
+
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

@@ -6,13 +6,50 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>edit-employee</ion-title>
+  <ion-navbar color="purple" >
+    <ion-title>{{employee.first_name}} {{employee.last_name}}</ion-title>
   </ion-navbar>
+
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="tabs" color="purple">
+      <ion-segment-button value="general">
+        General
+      </ion-segment-button>
+      <ion-segment-button value="educations">
+        Education
+      </ion-segment-button>
+      <ion-segment-button value="projects">
+        Projects
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
 
 </ion-header>
 
-
 <ion-content padding>
+  <div [ngSwitch]="tabs">
+    <form #employee_form="ngForm">
 
+      <ion-list *ngSwitchCase="'general'">
+        <tab-general [employee]="employee" (onSave)="save($event)"></tab-general>
+      </ion-list>
+
+      <ion-list *ngSwitchCase="'educations'">
+        <tab-educations [employee]="employee"></tab-educations>
+      </ion-list>
+
+      <ion-list *ngSwitchCase="'projects'">
+        <tab-projects [employee]="employee"></tab-projects>
+      </ion-list>
+
+      <ion-row>
+        <ion-col text-right>
+          <button ion-button (tap)="save()"
+            color="purple"
+            [disabled]="!employee_form.form.valid">Save</button>
+        </ion-col>
+      </ion-row>
+
+    </form>
+  </div>
 </ion-content>

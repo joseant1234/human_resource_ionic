@@ -1,0 +1,98 @@
+<div ngModelGroup="projects">
+
+  <ion-list-header color="purple">
+    Projects
+    <button ion-button icon-only clear color="light" (tap)="addProject()" item-end>
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-list-header>
+
+<div *ngFor="let project of employee.employee_projects; let i = index">
+  <ion-card >
+    <div [hidden]="project.attributes._destroy && project.attributes._destroy == 1">
+      <ion-list-header color="dark">{{project.attributes.title}}</ion-list-header>
+      <ion-row>
+        <ion-col col-10>
+          <ion-item>
+            <ion-label stack>Project name</ion-label>
+            <ion-input [(ngModel)]="project.attributes.title"
+              type="text"
+              name="title_{{i}}"
+              #title_export="ngModel"
+              [required]="project.attributes._destroy != 1"></ion-input>
+          </ion-item>
+          <ion-item [hidden]="title_export.valid || title_export.pristine" no-lines>
+            <p class="invalid">Please enter a valid title</p>
+          </ion-item>
+        </ion-col>
+        <ion-col col-2 text-right>
+          <button ion-button icon-only clear color="danger" (tap)="deleteProject(project)">
+            <ion-icon name="trash"></ion-icon>
+          </button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-10>
+          <ion-item>
+            <ion-label stack>Role</ion-label>
+            <ion-input [(ngModel)]="project.attributes.role"
+              type="text"
+              name="role_{{i}}"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-10>
+          <ion-item>
+            <ion-label stack>Start date</ion-label>
+            <ion-datetime displayFormat="MMM DD YYYY"
+              [(ngModel)]="project.attributes.start_date"
+              name="start_date_{{i}}"
+              #start_date_export="ngModel"
+              [required]="project.attributes._destroy != 1"></ion-datetime>
+          </ion-item>
+          <ion-item [hidden]="start_date_export.valid || start_date_export.pristine" no-lines>
+            <p class="invalid">Please enter a valid start date</p>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-10>
+          <ion-item>
+            <ion-label stack>End date</ion-label>
+            <ion-datetime
+              displayFormat="MMM DD YYYY"
+              [(ngModel)]="project.attributes.end_date"
+              name="end_date_{{i}}"></ion-datetime>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-list-header color="primary">
+        Responsabilities
+        <button ion-button icon-only clear color="light" (tap)="addResponsability(project)" item-end>
+          <ion-icon name="add"></ion-icon>
+        </button>
+      </ion-list-header>
+      <ion-row>
+        <ion-col col-12>
+          <div *ngFor="let responsability of project.employee_project_responsabilities; let i = index" class="top-space">
+            <ion-chip [hidden]="responsability.attributes._destroy && responsability.attributes._destroy == 1">
+              <ion-label color="purple">{{responsability.attributes.responsability}}</ion-label>
+              <ion-icon name="close" (tap)="deleteResponsability(responsability)"></ion-icon>
+            </ion-chip>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-list-header color="secondary">
+        Skills
+      </ion-list-header>
+      <skill-select
+          [skills]="skills"
+          [employee_project_skills]="project.employee_project_skills">
+      </skill-select>
+    </div>
+  </ion-card>
+</div>
+</div>
